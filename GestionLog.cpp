@@ -2,9 +2,10 @@
 /*************************************************************************
                            GestionLog  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 2019-01-16
+    copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
+    e-mail               : kenza.bouzid@insa-lyon.fr
+  			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <GestionLog> (fichier GestionLog.cpp) ------------
@@ -35,10 +36,13 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
-    if (this != & unGestionLog)
+    if (this != &unGestionLog)
     {
-      delete 
+       date = unGestionLog.date;
+       optionE = unGestionLog.optionE ;
+       mapLog = unGestionLog.mapLog ;
     }
+    return *this ;
 } //----- Fin de operator =
 
 
@@ -53,11 +57,18 @@ GestionLog::GestionLog ( const GestionLog & unGestionLog )
 } //----- Fin de GestionLog (constructeur de copie)
 
 
-GestionLog::GestionLog ( )
+GestionLog::GestionLog (int argc, char*argv [])
 // Algorithme :
 //
 {
-#ifdef MAP
+    for ( int i = 1 ; i <= argc ; i ++)
+    {
+      if (strchr (argv [i] , '-'))
+      {
+
+      }  
+    }
+    #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
 } //----- Fin de GestionLog

@@ -2,9 +2,10 @@
 /*************************************************************************
                            GestionLog  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 2019-01-16
+    copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
+    e-mail               : kenza.bouzid@insa-lyon.fr
+  			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <GestionLog> (fichier GestionLog.h) ----------------
@@ -16,6 +17,7 @@
 #include <fstream>
 #include <cstring>
 #include <map>
+#include "Date.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -95,10 +97,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     map < string , map<string, int>> mapLog;
-    struct date  {
-      int heure;
-      int time ;
-    };
+    Date date ;
     bool optionE ;
 
 };
