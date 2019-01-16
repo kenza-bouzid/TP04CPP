@@ -1,13 +1,14 @@
 
 /*************************************************************************
-                           Xxx  -  description
+                           GestionLog  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 2019-01-16
+    copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
+    e-mail               : kenza.bouzid@insa-lyon.fr
+  			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
-//---------- Réalisation de la classe <Xxx> (fichier Xxx.cpp) ------------
+//---------- Réalisation de la classe <GestionLog> (fichier GestionLog.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -16,14 +17,14 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
-#include "Xxx.h"
+#include "GestionLog.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Xxx::Méthode ( liste des paramètres )
+// type GestionLog::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -31,42 +32,56 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-Xxx & Xxx::operator = ( const Xxx & unXxx )
+GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
+    if (this != &unGestionLog)
+    {
+       date = unGestionLog.date;
+       optionE = unGestionLog.optionE ;
+       mapLog = unGestionLog.mapLog ;
+    }
+    return *this ;
 } //----- Fin de operator =
 
 
 //-------------------------------------------- Constructeurs - destructeur
-Xxx::Xxx ( const Xxx & unXxx )
+GestionLog::GestionLog ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <Xxx>" << endl;
+    cout << "Appel au constructeur de copie de <GestionLog>" << endl;
 #endif
-} //----- Fin de Xxx (constructeur de copie)
+} //----- Fin de GestionLog (constructeur de copie)
 
 
-Xxx::Xxx ( )
+GestionLog::GestionLog (int argc, char*argv [])
+// Algorithme :
+//
+{
+    for ( int i = 1 ; i <= argc ; i ++)
+    {
+      if (strchr (argv [i] , '-'))
+      {
+
+      }  
+    }
+    #ifdef MAP
+    cout << "Appel au constructeur de <GestionLog>" << endl;
+#endif
+} //----- Fin de GestionLog
+
+
+GestionLog::~GestionLog ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Xxx>" << endl;
+    cout << "Appel au destructeur de <GestionLog>" << endl;
 #endif
-} //----- Fin de Xxx
-
-
-Xxx::~Xxx ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <Xxx>" << endl;
-#endif
-} //----- Fin de ~Xxx
+} //----- Fin de ~GestionLog
 
 
 //------------------------------------------------------------------ PRIVE

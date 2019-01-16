@@ -1,29 +1,35 @@
 
 /*************************************************************************
-                           Xxx  -  description
+                           GestionLog  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 2019-01-16
+    copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
+    e-mail               : kenza.bouzid@insa-lyon.fr
+  			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
-//---------- Interface de la classe <Xxx> (fichier Xxx.h) ----------------
-#if ! defined ( XXX_H )
-#define XXX_H
+//---------- Interface de la classe <GestionLog> (fichier GestionLog.h) ----------------
+#if ! defined ( GESTIONLOG_H )
+#define GESTIONLOG_H
 
 //--------------------------------------------------- Interfaces utilisées
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <map>
+#include "Date.h"
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Xxx>
+// Rôle de la classe <GestionLog>
 //
 //
 //------------------------------------------------------------------------
 
-class Xxx : public Ancetre
+class GestionLog : public Ancetre
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -37,7 +43,7 @@ public:
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    Xxx & operator = ( const Xxx & unXxx );
+    GestionLog & operator = ( const GestionLog & unGestionLog );
     // Mode d'emploi :
     //
     // Contrat :
@@ -45,19 +51,19 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Xxx ( const Xxx & unXxx );
+    GestionLog ( const GestionLog & unGestionLog );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    Xxx ( );
+    GestionLog (int argc, char*argv []);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Xxx ( );
+    virtual ~GestionLog ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -68,10 +74,33 @@ public:
 protected:
 //----------------------------------------------------- Méthodes protégées
 
+    calculNbOcc (map<string,int>);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+
+    lectureLog ( ifstream & fichier);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+
+    sauvFichier(ofstream & fichier);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+
 //----------------------------------------------------- Attributs protégés
+    map < string , map<string, int>> mapLog;
+    Date date ;
+    bool optionE ;
 
 };
+//-------------------------------- Autres définitions dépendantes de <GestionLog>
 
-//-------------------------------- Autres définitions dépendantes de <Xxx>
-
-#endif // XXX_H
+#endif // GestionLog_H
