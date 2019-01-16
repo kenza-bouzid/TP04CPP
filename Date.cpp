@@ -56,7 +56,7 @@ bool Date::operator >= ( const Date & date ) const
 
 
 //---------------------------------------------- Constructeurs - Destructeur --
-Date::Date ( char lHeure, char lesMinutes ) : heure(lHeure),
+Date::Date ( int lHeure, int lesMinutes ) : heure(lHeure),
 	minutes(lesMinutes)
 {
 #ifdef MAP

@@ -54,7 +54,7 @@ public :
 
 
 	//-------------------------------------- Constructeurs - Destructeur --
-	Date ( char lHeure = 0, char lesMinutes = 0 );
+	Date ( int lHeure = 0, int lesMinutes = 0 );
 	// Mode d'emploi :
 	//	Permet de creer une date
 	//	lHeure : l'heure de la date.
@@ -78,8 +78,8 @@ public :
 	//	Aucun contrat.
 
 	//----------------------------------------------- Attributs publics --
-	char heure;		//Heure de la date
-	char minutes;	//Minutes de la date
+	int heure;		//Heure de la date
+	int minutes;	//Minutes de la date
 
 };
 

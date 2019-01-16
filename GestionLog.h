@@ -29,7 +29,7 @@
 //
 //------------------------------------------------------------------------
 
-class GestionLog : public Ancetre
+class GestionLog
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -74,21 +74,21 @@ public:
 protected:
 //----------------------------------------------------- Méthodes protégées
 
-    calculNbOcc (map<string,int>);
+    void calculNbOcc (map<string,int>);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
 
-    lectureLog ( ifstream & fichier);
+    void lectureLog ( ifstream & fichier);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
 
-    sauvFichier(ofstream & fichier);
+    void sauvFichier(ofstream & fichier);
     // Mode d'emploi :
     //
     // Contrat :
