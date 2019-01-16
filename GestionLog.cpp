@@ -1,13 +1,13 @@
 
 /*************************************************************************
-                           Xxx  -  description
+                           GestionLog  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <Xxx> (fichier Xxx.cpp) ------------
+//---------- Réalisation de la classe <GestionLog> (fichier GestionLog.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -16,14 +16,14 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
-#include "Xxx.h"
+#include "GestionLog.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Xxx::Méthode ( liste des paramètres )
+// type GestionLog::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -31,42 +31,46 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-Xxx & Xxx::operator = ( const Xxx & unXxx )
+GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
+    if (this != & unGestionLog)
+    {
+      delete 
+    }
 } //----- Fin de operator =
 
 
 //-------------------------------------------- Constructeurs - destructeur
-Xxx::Xxx ( const Xxx & unXxx )
+GestionLog::GestionLog ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <Xxx>" << endl;
+    cout << "Appel au constructeur de copie de <GestionLog>" << endl;
 #endif
-} //----- Fin de Xxx (constructeur de copie)
+} //----- Fin de GestionLog (constructeur de copie)
 
 
-Xxx::Xxx ( )
+GestionLog::GestionLog ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Xxx>" << endl;
+    cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
-} //----- Fin de Xxx
+} //----- Fin de GestionLog
 
 
-Xxx::~Xxx ( )
+GestionLog::~GestionLog ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Xxx>" << endl;
+    cout << "Appel au destructeur de <GestionLog>" << endl;
 #endif
-} //----- Fin de ~Xxx
+} //----- Fin de ~GestionLog
 
 
 //------------------------------------------------------------------ PRIVE
