@@ -17,7 +17,7 @@ DEP :=$(O:.o=.d)
 #Variables de compilation
 COMPILATEUR := g++
 COMPILATEUR_FLAGS := -Wall -W -ansi -pedantic -std=c++11
-DEBUG := -g -D MAP
+DEBUG := -g
 DEPENDANCES := -MMD
 
 
