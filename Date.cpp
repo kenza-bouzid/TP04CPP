@@ -55,6 +55,31 @@ bool Date::operator >= ( const Date & date ) const
 }//--- Fin de operator >=
 
 
+Date & Date::operator += ( const Date & date )
+{
+	int retenue = (minutes + date.minutes) / 60;
+	minutes = ( minutes + date.minutes ) % 60;
+	heure  = ( heure + date.heure + retenue ) % 24;
+
+	return *this;
+}//--- Fin de operator +=
+
+
+Date operator + ( const Date & date1, const Date & date2 )
+{
+	Date date ( date1 );
+	date += date2;
+	return date;
+}//--- Fin de operator +
+
+
+ostream & operator << ( ostream & out, const Date & date )
+{
+	out << date.heure << ":" << date.minutes << endl;
+	return out;
+}//--- Fin de operator <<
+
+
 //---------------------------------------------- Constructeurs - Destructeur --
 Date::Date ( int lHeure, int lesMinutes ) : heure(lHeure),
 	minutes(lesMinutes)
