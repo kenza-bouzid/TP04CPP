@@ -56,14 +56,14 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 } //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (istream * fichierLog , string OptionLog)
+GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog)
 // Algorithme :
 //
 {
   Lecture <Log> lectureLog (fichierLog);
   vector <Log> listeLogs =  lectureLog.LectureLog();
   sort (listeLogs.begin(), listeLogs.end());
-  /*switch (OptionLog)
+  switch (OptionLog)
   {
     case RIEN:
       break;
@@ -71,11 +71,17 @@ GestionLog::GestionLog (istream * fichierLog , string OptionLog)
       break;
     case T :
       break;
+    case G :
+      break;
     case ET:
+      break;
+    case EG:
+      break;
+    case ETG:
       break;
     default:
       break;
-  }*/
+  }
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
@@ -95,6 +101,8 @@ GestionLog::~GestionLog ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
+
+// c'etait juste un essai je crois pas qu eje garderai tout ca mnt qu'on change d'optique
 /*int GestionLog::calculNbOcc (const vector <Log> listeLogs, string cible)
 {
   Log logFictif (cible);
@@ -120,7 +128,7 @@ GestionLog::~GestionLog ( )
   return nbOcc;
 }
 
-/*void GestionLog::genereMapParDefaut (const vector <Log> listeLogs ) ;
+void GestionLog::genereMapParDefaut (const vector <Log> listeLogs ) ;
 {
 
 }

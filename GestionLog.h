@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <fstream>
 #include <map>
+#include <unordered_map>
 #include "Date.h"
 #include "Log.h"
 #include "Lecture.h"
@@ -33,7 +34,11 @@ typedef enum {
    E ,     // option d'exclusion des ficj=hiers de type image , css ou js
    T ,    // option permettant de ne prendre en compte que les hits qui sont dans
    // le crénau horaire correspondant à l'intervalle [heure, heure+1[
+   G ,  // option graph VIZ
    ET , //  combinaison des deux options E et T
+   EG , //  combinaison des deux options E et G
+   TG , //  combinaison des deux options G et G
+   ETG, //  combinaison de toutes les options
  } OptionGestionLog;
 //------------------------------------------------------------------------
 
@@ -76,7 +81,7 @@ public:
   	//	Aucun contrat.
 
 
-    GestionLog (istream * fichierLog , string OptionLog);
+    GestionLog (istream * fichierLog , OptionGestionLog OptionLog);
     // Mode d'emploi :
     //
     // Contrat :
@@ -93,7 +98,8 @@ public:
 protected:
 //----------------------------------------------------- Méthodes protégées
 
-    int calculNbOcc (const vector <Log> listeLogs, string cible );
+// --- je mets la toutes les idées de fonctions que j'utiliserai
+    int calculNbOcc (string cible);
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
@@ -105,13 +111,13 @@ protected:
     // Contrat :
     //
 
-    void genereMapHeure (const vector <Log> listeLogs) ;
+    void selectionParHeure ( vector <Log> & listeLogs) ;
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
     //
 
-    void genereMapExclusion (const vector <Log> listeLogs) ;
+    void selectionParExtension (vector <Log> & listeLogs) ;
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
@@ -133,13 +139,17 @@ protected:
 
 
 //----------------------------------------------------- Attributs protégés
-    map<string, int> mapLog;
+    unordered_map<string,unordered_map<string, int>> mapLog;
     // structure de données utilisée pour stocker les différentes informations
-    // relatives aux logs et qui nous sont utiles pour les options -e -t et
+    // relatives aux logs et qui nous sont utiles pour les options -g -e -t et
     // par défaut
+    // On utilise une ordered_map afin d'optimiser les calculs
+    // la fonction de hashage utilisée est spécifiée dans le .h car il s'agit
+    // d'une specialisation template de la sctructure de hashage définie
     // la clé de la map est de type string correspondant aux cibles
-    // la valeur est de type int correspondant au nombre de consultation de
-    // chaque cible
+    // la valeur est à son tour une unordered_map de clé refer
+    // et de valeur: la cardinalité de chaque arc
+
 
 };
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
