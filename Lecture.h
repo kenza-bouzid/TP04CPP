@@ -15,6 +15,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include "KeyLog.h"
 
 using namespace std;
 //------------------------------------------------------------------ Constantes
@@ -25,7 +26,7 @@ using namespace std;
 //	Role de la classe <Lecture>
 //	Permet de lire un fichier de Log et de creer une serie d'objet relies
 //		aux logs (objets de type T)
-//	T doit avoir un constructeur prenant en parametre un 
+//	T doit avoir un constructeur prenant en parametre un
 //		vector<string>, qui contient toutes les informations du Log.
 //	La gestion du flux d'entree (ouverture, fermeture) est a la gestion de
 //		l'appelant !!
