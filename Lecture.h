@@ -12,6 +12,7 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include <algorithm>
 #include <iostream>
@@ -31,14 +32,14 @@ using namespace std;
 //	La gestion du flux d'entree (ouverture, fermeture) est a la gestion de
 //		l'appelant !!
 //-----------------------------------------------------------------------------
-template < typename T >
+template < typename R , typename T >
 class Lecture
 {
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
-	vector < T > LectureLog ();
+	unordered_multimap <R,T>  LectureLog ();
 	// Mode d'emploi :
 	//	Lit tous les Logs contenus dans le flux d'entree. Si une erreur est
 	//		rencontree, annule toute la lecture et renvoie un vector vide.
@@ -105,16 +106,17 @@ protected :
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 //------------------------------------------------------- Methodes publiques --
-template < typename T >
-vector < T > Lecture<T>::LectureLog ()
+
+template < typename R , typename T >
+unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 {
-	vector < T > listeLogs;
+	unordered_multimap <R,T> tableLogs;
 	vector < string > informationsLog;
 
 	if ( entree == nullptr )
 		// Cas ou l'entree n'a pas ete renseignee comme il faut.
 	{
-		return listeLogs;
+		return tableLogs;
 	}
 
 	while ( entree -> good() )
@@ -122,23 +124,23 @@ vector < T > Lecture<T>::LectureLog ()
 		informationsLog = decoupageInformationsLog ();
 		if ( informationsLog.size() == 9 )
 		{
-			listeLogs.emplace_back ( informationsLog );
+			tableLogs.emplace(make_pair((informationsLog[4],informationsLog[7]),informationsLog ));
 		}
 		else	// Mauvaise lecture, donc on annule tout
 		{
 			cerr << "Le fichier de logs n'a pas le bon format ! Operaton annulee" << endl;
-			return vector<T>();
+			return unordered_map<R,T>();
 		}
 	}
 
-	return listeLogs;
+	return tableLogs;
 }//--- Fin de LectureLog
 
 
 //--------------------------------------------------- Surcharge d'operateurs --
 //---------------------------------------------- Constructeurs - Destructeur --
-template < typename T >
-Lecture<T>::Lecture ( istream * lEntree ) : entree ( lEntree )
+template < typename R,typename T >
+Lecture<R,T>::Lecture ( istream * lEntree ) : entree ( lEntree )
 {
 #ifdef MAP
 	cout << "Construction Lecture" << endl;
@@ -146,8 +148,8 @@ Lecture<T>::Lecture ( istream * lEntree ) : entree ( lEntree )
 }//--- Fin de Lecture
 
 
-template < typename T >
-Lecture<T>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
+template < typename R,typename T >
+Lecture<R,T>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 {
 #ifdef MAP
 	cout << "Construction Lecture par copie" << endl;
@@ -155,8 +157,8 @@ Lecture<T>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 }//--- Fin de Lecture
 
 
-template < typename T >
-Lecture<T>::~Lecture ()
+template < typename R,typename T >
+Lecture<R,T>::~Lecture ()
 {
 #ifdef MAP
 	cout << "Destruction Lecture" << endl;
@@ -166,8 +168,8 @@ Lecture<T>::~Lecture ()
 
 ///////////////////////////////////////////////////////////////////////// PRIVE
 //------------------------------------------------------- Methodes protegees --
-template < typename T >
-vector<string> Lecture<T>::decoupageInformationsLog ()
+template < typename R,typename T >
+vector<string> Lecture<R,T>::decoupageInformationsLog ()
 {
 	string informations;
 	getline(*entree, informations, '\n');
