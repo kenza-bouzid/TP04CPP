@@ -17,6 +17,7 @@
 #include <cstring>
 #include <vector>
 #include <iostream>
+#include "GestionLog.h"
 
 using namespace std;
 //------------------------------------------------------------------ Constantes

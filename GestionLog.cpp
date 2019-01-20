@@ -32,7 +32,7 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
+/*GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 // Algorithme :
 //
 {
@@ -45,7 +45,7 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 
 
 //-------------------------------------------- Constructeurs - destructeur
-/*GestionLog::GestionLog ( const GestionLog & unGestionLog )
+GestionLog::GestionLog ( const GestionLog & unGestionLog )
   mapLog (unGestionLog.mapLog)
 // Algorithme :
 //
@@ -56,28 +56,41 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 } //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog)
+/*GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date d)
 // Algorithme :
 //
 {
-  Lecture <Log> lectureLog (fichierLog);
-  vector <Log> listeLogs =  lectureLog.LectureLog();
-  sort (listeLogs.begin(), listeLogs.end());
+  Lecture <KeyLog , Log> lectureLog (fichierLog);
+  unordered_multimap <KeyLog,Log> tableLogs =  lectureLog.LectureLog();
+
   switch (OptionLog)
   {
     case RIEN:
+      genereMap (tableLogs);
       break;
     case E :
+      selectionParExtension (tableLogs) ;
+      genereMap (tableLogs);
       break;
     case T :
+      selectionParHeure (tableLogs,d) ;
+      genereMap (tableLogs);
       break;
     case G :
       break;
     case ET:
+      selectionParHeure (tableLogs,d);
+      selectionParExtension (tableLogs);
+      genereMap (tableLogs);
       break;
     case EG:
+      selectionParExtension (tableLogs);
+      genereMap (tableLogs);
       break;
     case ETG:
+      selectionParExtension (tableLogs);
+      selectionParHeure (tableLogs,d);
+      genereMap (tableLogs);
       break;
     default:
       break;
@@ -102,42 +115,36 @@ GestionLog::~GestionLog ( )
 
 //----------------------------------------------------- Méthodes protégées
 
-// c'etait juste un essai je crois pas qu eje garderai tout ca mnt qu'on change d'optique
-/*int GestionLog::calculNbOcc (const vector <Log> listeLogs, string cible)
+
+void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
 {
-  Log logFictif (cible);
-  int nbOcc = 1;
-  vector<Log>::iterator it ;
-
-  if (it ==  listeLogs.end ())
-  {
-    return nbOcc;
-  }
-
-  for ( it=find (listeLogs.begin(), listeLogs.end (), logFictif) ;it !=listeLogs.end (); ++it)
-  {
-    if (!strcmp(it->cible.c_str() , cible.c_str()))
+  //  unordered_multimap <KeyLog,Log>::iterator it ;
+    for (const auto &it : tableLogs)
     {
-      nbOcc ++ ;
+      mapLog[it.first]++;
     }
-    else
+}
+
+void GestionLog::selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs , Date date)
+{
+  unordered_multimap <KeyLog,Log>::iterator it ;
+  for (it = tableLogs.begin(); it != tableLogs.end(); it++)
+  {
+    if (it->second.date< date || it->second.date>= (date + Date (1)))
     {
-      return nbOcc;
+      tableLogs.erase(it);
     }
   }
-  return nbOcc;
 }
 
-void GestionLog::genereMapParDefaut (const vector <Log> listeLogs ) ;
+void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableLogs)
 {
-
-}
-void GestionLog::genereMapExclusion (const vector <Log> listeLogs)
-{
-
-}
-
-void GestionLog::genereMapHeure (const vector <Log> listeLogs) ;
-{
-
+  unordered_multimap <KeyLog,Log>::iterator it ;
+  for (it = tableLogs.begin(); it != tableLogs.end(); it++)
+  {
+    if (it->second.contenuIndispensable)
+      {
+        tableLogs.erase(it);
+      }
+  }
 }*/

@@ -1,11 +1,12 @@
 
-/*************************************************************************
-                           KeyLog  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
-*************************************************************************/
+/******************************************************************************
+		Lecture - Lecture d'un fichier de Log
+
+	debut		: 2019-01-17
+	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
+	e-mail		: kenza.bouzid@insa-lyon.fr
+			  pierre-yves.genest@insa-lyon.fr
+******************************************************************************/
 
 //---------- Interface de la classe <KeyLog> (fichier KeyLog.h) ----------------
 #if ! defined ( KEYLOG_H )
@@ -36,7 +37,8 @@ class KeyLog
 
 public:
 //----------------------------------------------------- Méthodes publiques
-
+string cible;
+string referer;
 //------------------------------------------------- Surcharge d'opérateurs
     friend bool operator == ( const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 );
     // Méthode inline : définition de la méthode dans l'interface à la fin de
@@ -74,15 +76,11 @@ public:
     // Contrat :
     //  Aucun contrat
 
-    friend struct hash<KeyLog> ;
-
-
 //------------------------------------------------------------------ PRIVE
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-  string cible;
-  string referer;
+
 //----------------------------------------------------- Attributs protégés
 
 };
@@ -91,51 +89,20 @@ protected:
 
 #endif // KEYLOG_H
 
-inline bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
-  // surcharge de l'opérateur ==
-{
-  return (   (unKeyLog1.cible == unKeyLog2.cible)
-            && (unKeyLog1.referer == unKeyLog2.referer)) ;
-}
-
-inline KeyLog::KeyLog ( const KeyLog & unKeyLog ) : cible (unKeyLog.cible) ,
-    referer(unKeyLog.referer)
-{
-  #ifdef MAP
-      cout << "Appel au constructeur de copie de <KeyLog>" << endl;
-  #endif
-} //----- Fin de KeyLog (constructeur de copie)
-
-inline KeyLog::KeyLog ( string uneCible, string unReferer) : cible (uneCible) ,
-    referer (unReferer)
-{
-  #ifdef MAP
-      cout << "Appel au constructeur de <KeyLog>" << endl;
-  #endif
-} //----- Fin de KeyLog
-
-inline KeyLog::~KeyLog ( )
-{
-  #ifdef MAP
-      cout << "Appel au destructeur de <KeyLog>" << endl;
-  #endif
-} //----- Fin de ~KeyLog
-
 //---------- Définition de la fonction de hashage ---------
 // source : stackOverflow forum
-namespace std
-{
+namespace std {
+
   template <>
   struct hash<KeyLog>
+{
+  size_t operator()(const KeyLog& k) const
   {
-    size_t operator()(const KeyLog& k) const
-    {
-      // Compute individual hash values for first, second and third
-              // http://stackoverflow.com/a/1646913/126995
-        size_t res = 17;
-        res = res * 31 + hash<string>()( k.cible );
-        res = res * 31 + hash<string>()( k.referer );
-        return res;
-    }
-  };
-}
+    // Compute individual hash values for first, second and third
+            // http://stackoverflow.com/a/1646913/126995
+      size_t res = 17;
+      res = res * 31 + hash<string>()( k.cible );
+      res = res * 31 + hash<string>()( k.referer );
+      return res;
+  }
+};

@@ -14,12 +14,10 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <vector>
-#include <string>
 #include <cstring>
 #include <iostream>
 #include <algorithm>
 #include <fstream>
-#include <map>
 #include <unordered_map>
 #include "Date.h"
 #include "Log.h"
@@ -40,6 +38,8 @@ typedef enum {
    TG , //  combinaison des deux options G et G
    ETG, //  combinaison de toutes les options
  } OptionGestionLog;
+ 
+
 //------------------------------------------------------------------------
 
 // Rôle de la classe <GestionLog>
@@ -81,7 +81,8 @@ public:
   	//	Aucun contrat.
 
 
-    GestionLog (istream * fichierLog , OptionGestionLog OptionLog);
+    GestionLog (istream * fichierLog , OptionGestionLog OptionLog ,
+       Date date = Date ());
     // Mode d'emploi :
     //
     // Contrat :
@@ -105,45 +106,31 @@ protected:
     // Contrat :
     //
 
-    void genereMapParDefaut (const vector <Log> listeLogs ) ;
+    void genereMap(const unordered_multimap <KeyLog,Log> & tableLogs);
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
     //
 
-    void selectionParHeure ( vector <Log> & listeLogs) ;
+    void selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs , Date heure ) ;
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
     //
 
-    void selectionParExtension (vector <Log> & listeLogs) ;
+    void selectionParExtension (unordered_multimap <KeyLog,Log> & tableLogs) ;
     // Mode d'emploi :
     // permet de calculer
-    // Contrat :
-    //
-
-
-    void lectureLog ( ifstream & fichier);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-
-    void sauvFichier(ofstream & fichier);
-    // Mode d'emploi :
-    //
     // Contrat :
     //
 
 
 //----------------------------------------------------- Attributs protégés
-    unordered_map<string,unordered_map<string, int>> mapLog;
+    unordered_map<KeyLog,int> mapLog;
     // structure de données utilisée pour stocker les différentes informations
     // relatives aux logs et qui nous sont utiles pour les options -g -e -t et
     // par défaut
-    // On utilise une ordered_map afin d'optimiser les calculs
+    // On utilise une ordered_map afin d'optimiser les algos de recherche
     // la fonction de hashage utilisée est spécifiée dans le .h car il s'agit
     // d'une specialisation template de la sctructure de hashage définie
     // la clé de la map est de type string correspondant aux cibles
@@ -155,3 +142,46 @@ protected:
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 
 #endif // GestionLog_H
+
+//---------- Définition de la fonction de hashage ---------
+/*namespace std
+{
+  template <>
+  struct hash<string>
+  {
+    // fonction de décalage de bit circulaire
+    unsigned int shift_rotate(unsigned int val, unsigned int n)
+    {
+      n = n%(sizeof(unsigned int)*8);
+      return (val<<n) | (val>> (sizeof(unsigned int)*8-n));
+    }
+    // fonction d'encodage d'une chaîne de caractères
+    unsigned int Encode(string key)
+    {
+       unsigned int i;
+       unsigned int val = 0;
+       unsigned int power = 0;
+       for (i=0;i<strlen(key);i++)
+       {
+         val += shift_rotate(key[i],power*7);
+         power++;
+       }
+       return val;
+    }
+    // fonction de hachage simple qui prend le modulo
+    unsigned int hash(unsigned int val, unsigned int size)
+    {
+       return val%size;
+    }
+    // fonction de hachage complète à utiliser
+    unsigned int HashFunction(string key, unsigned int size)
+    {
+       return hash(Encode(key),size);
+    }
+    // Surgarche de l'opérateur ()
+    size_t operator()(const string& s) const
+    {
+        return HashFunction(s,strlen(s));
+    }
+  };
+}*/

@@ -1,5 +1,5 @@
 /******************************************************************************
-		Date -  
+		Date -
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -83,7 +83,7 @@ public :
 	//	out : le flux de sortie sur lequel on affiche la date
 	//	date : la date a afficher
 	//	retour : le flux de sortie (out)
-	// Contrat : 
+	// Contrat :
 	//	Aucun contrat.
 
 
@@ -98,7 +98,7 @@ public :
 
 
 	Date ( const Date & date );
-	// Mode d'emploi : 
+	// Mode d'emploi :
 	//	Constructeur de copie de la classe Date.
 	//	date : la date a copier.
 	// Contrat :
