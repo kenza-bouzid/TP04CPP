@@ -1,5 +1,5 @@
 /******************************************************************************
-		Log -  
+		Log -
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -169,6 +169,15 @@ ostream & operator << ( ostream & out, const Log & log )
 	return out;
 }
 
+bool Log::operator < (const Log& log ) const
+{
+		return cible < log.cible ;
+}//--- Fin de operator <
+
+bool operator == (const Log& log1 , const Log& log2 )
+{
+	return !strcmp(log1.cible.c_str(),log2.cible.c_str()) ;
+}// --- Fin de operator ==
 
 //---------------------------------------------- Constructeurs - Destructeur --
 Log::Log ( Date laDate, string laCible, string leReferer, string leBaseReferer,
@@ -202,6 +211,13 @@ Log::Log ( const vector<string> & informations ) : date(), cible(""),
 	*this = informations;
 }
 
+Log::Log (string laCible ) : date () , cible (laCible) , referer (""),
+	 baseReferer(""), contenuIndispensable(false)
+{
+	#ifdef MAP
+		cout << "Construction Log fictif à partir d'une cible uniquement" << endl;
+	#endif
+}
 
 Log::~Log()
 {
@@ -238,5 +254,3 @@ bool Log::estContenuIndispensable ( string & extension )
 
 	return true;
 }
-
-

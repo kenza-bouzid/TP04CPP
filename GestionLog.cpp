@@ -38,8 +38,6 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 {
     if (this != &unGestionLog)
     {
-       date = unGestionLog.date;
-       optionE = unGestionLog.optionE ;
        mapLog = unGestionLog.mapLog ;
     }
     return *this ;
@@ -47,28 +45,38 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 
 
 //-------------------------------------------- Constructeurs - destructeur
-GestionLog::GestionLog ( const GestionLog & unGestionLog )
+/*GestionLog::GestionLog ( const GestionLog & unGestionLog )
+  mapLog (unGestionLog.mapLog)
 // Algorithme :
 //
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <GestionLog>" << endl;
 #endif
-} //----- Fin de GestionLog (constructeur de copie)
+} //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (int argc, char*argv [])
+GestionLog::GestionLog (istream * fichierLog , string OptionLog)
 // Algorithme :
 //
 {
-    for ( int i = 1 ; i <= argc ; i ++)
-    {
-      if (strchr (argv [i] , '-'))
-      {
-
-      }  
-    }
-    #ifdef MAP
+  Lecture <Log> lectureLog (fichierLog);
+  vector <Log> listeLogs =  lectureLog.LectureLog();
+  sort (listeLogs.begin(), listeLogs.end());
+  /*switch (OptionLog)
+  {
+    case RIEN:
+      break;
+    case E :
+      break;
+    case T :
+      break;
+    case ET:
+      break;
+    default:
+      break;
+  }*/
+#ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
 } //----- Fin de GestionLog
@@ -87,3 +95,41 @@ GestionLog::~GestionLog ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
+/*int GestionLog::calculNbOcc (const vector <Log> listeLogs, string cible)
+{
+  Log logFictif (cible);
+  int nbOcc = 1;
+  vector<Log>::iterator it ;
+
+  if (it ==  listeLogs.end ())
+  {
+    return nbOcc;
+  }
+
+  for ( it=find (listeLogs.begin(), listeLogs.end (), logFictif) ;it !=listeLogs.end (); ++it)
+  {
+    if (!strcmp(it->cible.c_str() , cible.c_str()))
+    {
+      nbOcc ++ ;
+    }
+    else
+    {
+      return nbOcc;
+    }
+  }
+  return nbOcc;
+}
+
+/*void GestionLog::genereMapParDefaut (const vector <Log> listeLogs ) ;
+{
+
+}
+void GestionLog::genereMapExclusion (const vector <Log> listeLogs)
+{
+
+}
+
+void GestionLog::genereMapHeure (const vector <Log> listeLogs) ;
+{
+
+}*/

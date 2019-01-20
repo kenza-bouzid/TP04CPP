@@ -1,5 +1,5 @@
 /******************************************************************************
-		Log -  
+		Log -
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -14,6 +14,7 @@
 #include "Date.h"
 
 #include <string>
+#include <cstring>
 #include <vector>
 #include <iostream>
 
@@ -22,7 +23,7 @@ using namespace std;
 //----------------------------------------------------------------------- Types
 //-----------------------------------------------------------------------------
 //	Role de la classe <Log>
-//		Permet de lire et de stocker les informations sinteressantes du Log 
+//		Permet de lire et de stocker les informations interessantes du Log
 //			(pour le TP)
 //-----------------------------------------------------------------------------
 class Log
@@ -32,6 +33,7 @@ class Log
 public :
 	//----------------------------------------------- Methodes publiques --
 	//------------------------------------------- Surcharge d'operateurs --
+	friend class GestionLog ;
 	Log & operator = ( const Log & log );
 	// Mode d'emploi :
 	//	Operateur d'affectation de la classe Log.
@@ -43,7 +45,7 @@ public :
 
 	Log & operator = ( const vector<string> & informations );
 	// Mode d'emploi :
-	//	Affecte les valeurs des variables d'instances en fonction des 
+	//	Affecte les valeurs des variables d'instances en fonction des
 	//		informations.
 	//	informations : contient toutes les informations du Log (voir partie 2)
 	//	retour : le Log affecte.
@@ -62,6 +64,26 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
+	bool operator < (const Log& log ) const;
+	// Mode d'emploi :
+	//	Permet de comparer deux logs selon leur cible (ordre alphabétique)
+	//	log : le log à comparer
+	//	retour : un booléen indiquant si le log courant est inférieur au log
+	// passé en paramètre
+	// Contrat :
+	//	Aucun contrat.
+
+	friend bool operator == (const Log& log1 , const Log& log2);
+	// Mode d'emploi :
+	//	Permet de comparer deux logs selon leur cible
+	//	log1 et log 2 : les logs à comparer
+	//	retour : un booléen indiquant si les log1 et log2 sont égaux selon leurs
+	//  cibles respectives
+	// passé en paramètre
+	// Contrat :
+	//	Aucun contrat.
+
+
 
 	//-------------------------------------- Constructeurs - Destructeur --
 	Log ( Date laDate = Date(), string laCible = "", string leReferer = "",
@@ -76,12 +98,20 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
+	Log (string laCible);
+	// Mode d'emploi :
+	//	Surcharge du constructeur de la classe Log
+	// permet de créer un log fictif util pour la comparaison des log selon leur cible
+	//	laCible : la cible fictive
+	// Contrat :
+	//	Aucun contrat.
+
 
 	Log ( const Log & log );
 	// Mode d'emploi :
 	//	Constructeur de copie de la classe Log.
 	//	log : le log a copier
-	// Contrat : 
+	// Contrat :
 	//	Aucun contrat.
 
 
