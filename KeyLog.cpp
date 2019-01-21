@@ -10,13 +10,14 @@
 //---------- Réalisation de la classe <KeyLog> (fichier KeyLog.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
-
+#include "KeyLog.h"
 //-------------------------------------------------------- Include système
 #include <iostream>
 using namespace std;
+#include <cstring>
 
 //------------------------------------------------------ Include personnel
-#include "KeyLog.h"
+
 
 //------------------------------------------------------------- Constantes
 
@@ -26,14 +27,24 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-inline bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
+bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
   // surcharge de l'opérateur ==
 {
-  return (   (unKeyLog1.cible == unKeyLog2.cible)
+  return ( (unKeyLog1.cible == unKeyLog2.cible)
             && (unKeyLog1.referer == unKeyLog2.referer)) ;
 }
 
-inline KeyLog::KeyLog ( const KeyLog & unKeyLog ) : cible (unKeyLog.cible) ,
+
+
+KeyLog::KeyLog(string uneCible, string unReferer) : cible(uneCible) , referer (unReferer)
+{
+	#ifdef MAP
+		cout << "Appel au constructeur de <KeyLog>" << endl;
+	#endif
+
+}//----- Fin de KeyLog
+
+KeyLog::KeyLog ( const KeyLog & unKeyLog ) : cible (unKeyLog.cible) ,
     referer(unKeyLog.referer)
 {
   #ifdef MAP
@@ -41,15 +52,8 @@ inline KeyLog::KeyLog ( const KeyLog & unKeyLog ) : cible (unKeyLog.cible) ,
   #endif
 } //----- Fin de KeyLog (constructeur de copie)
 
-inline KeyLog::KeyLog ( string uneCible, string unReferer) : cible (uneCible) ,
-    referer (unReferer)
-{
-  #ifdef MAP
-      cout << "Appel au constructeur de <KeyLog>" << endl;
-  #endif
-} //----- Fin de KeyLog
 
-inline KeyLog::~KeyLog ( )
+KeyLog::~KeyLog ( )
 {
   #ifdef MAP
       cout << "Appel au destructeur de <KeyLog>" << endl;

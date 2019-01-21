@@ -13,7 +13,9 @@
 #define KEYLOG_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <cstring>
+#include <functional>
+#include <string>
+
 
 using namespace std ;
 //------------------------------------------------------------- Constantes
@@ -31,14 +33,12 @@ using namespace std ;
 //
 //------------------------------------------------------------------------
 
-class KeyLog
+struct KeyLog
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
-//----------------------------------------------------- Méthodes publiques
-string cible;
-string referer;
+
 //------------------------------------------------- Surcharge d'opérateurs
     friend bool operator == ( const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 );
     // Méthode inline : définition de la méthode dans l'interface à la fin de
@@ -76,33 +76,23 @@ string referer;
     // Contrat :
     //  Aucun contrat
 
-//------------------------------------------------------------------ PRIVE
-
-protected:
-//----------------------------------------------------- Méthodes protégées
-
-//----------------------------------------------------- Attributs protégés
+    //----------------------------------------------------- Attributs publiques
+      string cible;
+      string referer;
 
 };
 
 //-------------------------------- Autres définitions dépendantes de <KeyLog>
-
-#endif // KEYLOG_H
-
-//---------- Définition de la fonction de hashage ---------
-// source : stackOverflow forum
 namespace std {
-
-  template <>
-  struct hash<KeyLog>
-{
-  size_t operator()(const KeyLog& k) const
-  {
-    // Compute individual hash values for first, second and third
-            // http://stackoverflow.com/a/1646913/126995
-      size_t res = 17;
-      res = res * 31 + hash<string>()( k.cible );
-      res = res * 31 + hash<string>()( k.referer );
-      return res;
-  }
+template<>
+class hash<KeyLog> {
+public:
+    size_t operator()(const KeyLog &k) const
+    {
+        size_t h1 = std::hash<std::string>()(k.cible);
+        size_t h2 = std::hash<std::string>()(k.referer);
+        return h1 ^ ( h2 << 1 );
+    }
 };
+}
+#endif // KEYLOG_H

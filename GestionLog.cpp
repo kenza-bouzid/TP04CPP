@@ -41,11 +41,11 @@ using namespace std;
        mapLog = unGestionLog.mapLog ;
     }
     return *this ;
-} //----- Fin de operator =
+} //----- Fin de operator =*/
 
 
 //-------------------------------------------- Constructeurs - destructeur
-GestionLog::GestionLog ( const GestionLog & unGestionLog )
+/*GestionLog::GestionLog ( const GestionLog & unGestionLog )
   mapLog (unGestionLog.mapLog)
 // Algorithme :
 //
@@ -98,7 +98,7 @@ GestionLog::GestionLog ( const GestionLog & unGestionLog )
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
-} //----- Fin de GestionLog
+} //----- Fin de GestionLog*/
 
 
 GestionLog::~GestionLog ( )
@@ -108,7 +108,7 @@ GestionLog::~GestionLog ( )
 #ifdef MAP
     cout << "Appel au destructeur de <GestionLog>" << endl;
 #endif
-} //----- Fin de ~GestionLog
+} //----- Fin de ~GestionLog*/
 
 
 //------------------------------------------------------------------ PRIVE
@@ -147,4 +147,4 @@ void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableL
         tableLogs.erase(it);
       }
   }
-}*/
+}

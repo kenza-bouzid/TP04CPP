@@ -16,7 +16,6 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-#include "KeyLog.h"
 
 using namespace std;
 //------------------------------------------------------------------ Constantes

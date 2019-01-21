@@ -22,6 +22,7 @@
 #include "Date.h"
 #include "Log.h"
 #include "Lecture.h"
+#include "KeyLog.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -38,7 +39,7 @@ typedef enum {
    TG , //  combinaison des deux options G et G
    ETG, //  combinaison de toutes les options
  } OptionGestionLog;
- 
+
 
 //------------------------------------------------------------------------
 
@@ -73,7 +74,7 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    GestionLog ( const GestionLog & unGestionLog );
+    GestionLog (const GestionLog & unGestionLog );
     // Mode d'emploi :
   	//	Constructeur de copie de la classe GestionLog.
   	//	unGestionLog : le gestionnaire log a copier

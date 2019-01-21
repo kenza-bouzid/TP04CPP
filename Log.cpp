@@ -211,13 +211,13 @@ Log::Log ( const vector<string> & informations ) : date(), cible(""),
 	*this = informations;
 }
 
-Log::Log (string laCible ) : date () , cible (laCible) , referer (""),
+/*Log::Log (string laCible ) : date () , cible (laCible) , referer (""),
 	 baseReferer(""), contenuIndispensable(false)
 {
 	#ifdef MAP
 		cout << "Construction Log fictif à partir d'une cible uniquement" << endl;
 	#endif
-}
+}*/
 
 Log::~Log()
 {

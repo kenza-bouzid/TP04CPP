@@ -12,12 +12,10 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include "Date.h"
-
 #include <string>
 #include <cstring>
 #include <vector>
 #include <iostream>
-#include "GestionLog.h"
 
 using namespace std;
 //------------------------------------------------------------------ Constantes
@@ -99,7 +97,7 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
-	Log (string laCible);
+	//Log (string laCible);
 	// Mode d'emploi :
 	//	Surcharge du constructeur de la classe Log
 	// permet de créer un log fictif util pour la comparaison des log selon leur cible
