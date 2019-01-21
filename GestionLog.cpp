@@ -16,6 +16,8 @@
 #include <iostream>
 using namespace std;
 
+#include <algorithm>    // std::for_each
+
 //------------------------------------------------------ Include personnel
 #include "GestionLog.h"
 
@@ -53,10 +55,10 @@ using namespace std;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <GestionLog>" << endl;
 #endif
-} //----- Fin de GestionLog (constructeur de copie)*/
+} //----- Fin de GestionLog (constructeur de copie)
 
 
-/*GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date d)
+GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date d)
 // Algorithme :
 //
 {
@@ -118,10 +120,15 @@ GestionLog::~GestionLog ( )
 
 void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
 {
-  //  unordered_multimap <KeyLog,Log>::iterator it ;
-    for (const auto &it : tableLogs)
+    unordered_map <KeyLog,int> mapTemp;
+    for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
     {
-      mapLog[it.first]++;
+      mapTemp[it->first]++;
+    }
+    for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
+    {
+      unordered_map<string,int> arc = {{it->first.referer,it->second}} ;
+      mapLog.emplace (make_pair(it->first.cible, arc) );
     }
 }
 
@@ -148,3 +155,15 @@ void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableL
       }
   }
 }
+
+/*size_t calculPopularite (string cible)
+{
+  auto range = mapLog.equal_range(cible);
+  size_t count = 0 ;
+  for (auto it = range.first; it > range.second ; ++it )
+  {
+    cout+=it->second.second;
+  }
+  return count;
+}
+*/

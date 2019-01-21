@@ -101,11 +101,6 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 // --- je mets la toutes les idées de fonctions que j'utiliserai
-    int calculNbOcc (string cible);
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
 
     void genereMap(const unordered_multimap <KeyLog,Log> & tableLogs);
     // Mode d'emploi :
@@ -125,18 +120,20 @@ protected:
     // Contrat :
     //
 
+    size_t calculPopularite (string cible);
+
+//    multimap <int,string>
 
 //----------------------------------------------------- Attributs protégés
-    unordered_map<KeyLog,int> mapLog;
+    unordered_multimap<string,unordered_map<string,int>> mapLog;
     // structure de données utilisée pour stocker les différentes informations
     // relatives aux logs et qui nous sont utiles pour les options -g -e -t et
     // par défaut
     // On utilise une ordered_map afin d'optimiser les algos de recherche
-    // la fonction de hashage utilisée est spécifiée dans le .h car il s'agit
-    // d'une specialisation template de la sctructure de hashage définie
     // la clé de la map est de type string correspondant aux cibles
     // la valeur est à son tour une unordered_map de clé refer
     // et de valeur: la cardinalité de chaque arc
+
 
 
 };
