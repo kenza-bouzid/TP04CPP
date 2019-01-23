@@ -100,6 +100,9 @@ GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
+
+    dixPopulaire();
+    afficherDixPopulaire();
 } //----- Fin de GestionLog*/
 
 
@@ -217,6 +220,8 @@ void GestionLog::GenererGraphe ( ostream * out ) const
   if ( out->good() )
   {
     *out << "digraph {\n" << ecriture << "}";
+  }
+}
 
 
 vector<Arc> GestionLog::dixPopulaire ()

@@ -51,7 +51,7 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    KeyLog ( string uneCible, string unReferer);
+    KeyLog ( const string & uneCible, const string & unReferer);
     // Constructeur inline : définition du constructeur dans l'interface à la fin
     // de la définition de la classe KeyLog
     // Mode d'emploi : Constructeur de la classe Key

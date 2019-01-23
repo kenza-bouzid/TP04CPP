@@ -12,12 +12,15 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include "Date.h"
+#include "Lecture.h"
+#include "KeyLog.h"
 #include <string>
 #include <cstring>
 #include <vector>
 #include <iostream>
 
 using namespace std;
+
 //------------------------------------------------------------------ Constantes
 //----------------------------------------------------------------------- Types
 //-----------------------------------------------------------------------------
@@ -27,12 +30,20 @@ using namespace std;
 //-----------------------------------------------------------------------------
 class Log
 {
+	friend class GestionLog;
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
+	KeyLog GetKey() const;
+	// Mode d'emploi :
+	//	Retourne un objet cle qui identifie le Log.
+	//	retour : la cle qui identifie le Log.
+	// Contrat :
+	//	Aucun contrat.
+
+
 	//------------------------------------------- Surcharge d'operateurs --
-	friend class GestionLog ;
 	Log & operator = ( const Log & log );
 	// Mode d'emploi :
 	//	Operateur d'affectation de la classe Log.

@@ -21,6 +21,11 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 //------------------------------------------------------- Methodes publiques --
+KeyLog Log::GetKey ( ) const
+{
+	return KeyLog ( cible, referer );
+}//--- Fin de GetKey
+
 //-------------------------------------------------- Surcharge d'operateurs --
 Log & Log::operator = ( const Log & log )
 {

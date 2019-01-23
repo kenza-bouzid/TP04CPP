@@ -28,6 +28,7 @@ using namespace std;
 //		aux logs (objets de type T)
 //	T doit avoir un constructeur prenant en parametre un
 //		vector<string>, qui contient toutes les informations du Log.
+//	T doit avoir une methode permettant de generer une cle (GetKey)
 //	La gestion du flux d'entree (ouverture, fermeture) est a la gestion de
 //		l'appelant !!
 //-----------------------------------------------------------------------------
@@ -123,8 +124,9 @@ unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 		informationsLog = decoupageInformationsLog ();
 		if ( informationsLog.size() == 9 )
 		{
+			T log(informationsLog);
 
-			tableLogs.emplace(make_pair(R(informationsLog[4],informationsLog[7]),informationsLog ));
+			tableLogs.insert(make_pair(log.GetKey(), log));
 		}
 		else	// Mauvaise lecture, donc on annule tout
 		{

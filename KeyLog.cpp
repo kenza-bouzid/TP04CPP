@@ -36,7 +36,8 @@ bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
 
 
 
-KeyLog::KeyLog(string uneCible, string unReferer) : cible(uneCible) , referer (unReferer)
+KeyLog::KeyLog( const string & uneCible, const string & unReferer) : 
+  cible(uneCible) , referer (unReferer)
 {
 	#ifdef MAP
 		cout << "Appel au constructeur de <KeyLog>" << endl;
