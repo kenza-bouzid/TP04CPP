@@ -156,13 +156,13 @@ void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableL
   }
 }
 
-/*size_t GestionLog::calculPopularite (string cible)
+size_t GestionLog::calculPopularite (string cible)
 {
   auto range = mapLog.equal_range(cible);
   size_t count = 0 ;
-  for (auto it = range.first; it > range.second ; ++it )
+  for (auto it = range.first; it != range.second ; ++it )
   {
-    count+=mapLog[it->first];
+    count+=it->second.cardinalite;
   }
   return count;
-}*/
+}
