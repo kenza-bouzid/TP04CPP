@@ -101,12 +101,15 @@ void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
 
 void GestionLog::selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs , Date date)
 {
-  unordered_multimap <KeyLog,Log>::iterator it ;
-  for (it = tableLogs.begin(); it != tableLogs.end(); it++)
+  for (auto it = tableLogs.begin(); it != tableLogs.end(); )
   {
-    if (it->second.date< date || it->second.date>= (date + 1))
+    if (it->second.date < date || it->second.date >= (date + 1))
     {
-      tableLogs.erase(it);
+      tableLogs.erase(it++);
+    }
+    else
+    {
+      ++it;
     }
   }
 }
@@ -114,11 +117,15 @@ void GestionLog::selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs
 void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableLogs)
 {
   unordered_multimap <KeyLog,Log>::iterator it ;
-  for (it = tableLogs.begin(); it != tableLogs.end(); it++)
+  for (it = tableLogs.begin(); it != tableLogs.end();)
   {
-    if (it->second.contenuIndispensable)
+    if ( ! it->second.contenuIndispensable)
       {
-        tableLogs.erase(it);
+        tableLogs.erase(it++);
+      }
+      else
+      {
+        ++it;
       }
   }
 }
@@ -227,6 +234,7 @@ void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option
     bool bitT = option & 1 ;
     if (bitE)
       {
+        cout << "Suppression des fichiers image, javascript, css" << endl;
         selectionParExtension (tableLogs) ;
       }
     if (bitT)
