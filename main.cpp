@@ -230,22 +230,46 @@ int main ( int argc, char * argv [] )
 {
 	analyseArguments ( argc, argv );
 
-	ifstream f;
-	f.open(nomFichierLog);
+	// Vecteur pour les options de gestion des logs
+	int vecteurOption = optionCreationGraphe << 2 | 
+			optionGarderIndispensable << 1 |
+			optionHeure;
 
-	if(f.good())
+	// Gestion du fichier de log
+	ifstream in;
+	in.open(nomFichierLog);
+	if ( ! in )
 	{
-		GestionLog g(&f, OptionGestionLog::RIEN);
-
-		if(optionCreationGraphe)
-		{
-			ofstream out(nomFichierGraphe);
-			if( out )
-			{
-				g.GenererGraphe(&out);
-			}
-		}
-		
+		cerr << "Impossible d'acceder au fichier de Log !" << endl;
+		exit(-1);
 	}
+	else if (in.eof())
+	{
+		cerr << "Fichier de Logs vide !" << endl;
+		exit(-1);
+	}
+
+	// Gestion du fichier pour le graphe
+	ofstream out;
+	out.open(nomFichierGraphe, ios_base::out & ~ios_base::trunc);
+	if ( optionCreationGraphe )
+	{
+		if ( ! out )
+		{
+			cerr << "Impossible d'acceder au fichier pour ecrire le graphe !"
+				<< endl;
+			exit(-1);
+		}
+
+		if ( ! out.eof() )
+		{
+			cerr << "Attention, le fichier contient des donnees !" << endl;
+			cerr << "Les donnees seront supprimees !" << endl;
+			out.close();
+			out.open(nomFichierGraphe, ios_base::in | ios_base::trunc);
+		}
+	}
+
+	GestionLog g(&in, vecteurOption, heure);
 }//--- Fin de main
 
