@@ -44,6 +44,13 @@ public:
     // Contrat :
     //
 
+    bool operator < ( const Arc & unArc );
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void Afficher(const string s = "")const; 
 
 //-------------------------------------------- Constructeurs - destructeur
     Arc ( const Arc & unArc );

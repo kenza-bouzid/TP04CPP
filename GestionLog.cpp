@@ -127,8 +127,7 @@ void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
     }
     for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
     {
-      Arc arc (it->first.referer,it->second) ;
-      mapLog.emplace (make_pair(it->first.cible,arc));
+      mapLog.emplace (make_pair(it->first.cible,Arc(it->first.referer,it->second)));
     }
 }
 
@@ -165,4 +164,32 @@ size_t GestionLog::calculPopularite (string cible)
     count+=it->second.cardinalite;
   }
   return count;
+}
+
+vector<Arc> GestionLog::dixPopulaire ()
+{
+  unordered_map <string,unsigned int> mapTemp;
+  for (auto it = mapLog.begin(); it != mapLog.end(); ++it)
+  {
+    if (mapTemp.find(it->first)==mapTemp.end())
+    {
+      mapTemp[it->first]=calculPopularite(it->first);
+    }
+  }
+  vector <Arc> listeArc;
+  for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it)
+  {
+    listeArc.emplace_back(Arc(it->first, it->second));
+  }
+  sort(listeArc.begin() , listeArc.end()) ;
+  return listeArc ;
+}
+
+void GestionLog::afficherDixPopulaire() 
+{
+  vector<Arc> listeArc = dixPopulaire();
+  for (auto it = listeArc.begin(); it != listeArc.end(); ++it)
+  {
+    it->Afficher();
+  }
 }
