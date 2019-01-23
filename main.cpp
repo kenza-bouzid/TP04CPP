@@ -268,5 +268,5 @@ int main ( int argc, char * argv [] )
 			out.open(nomFichierGraphe, ios_base::in | ios_base::trunc);
 		}
 	}
-	GestionLog g(&in,&out,vecteurOption, heure);
+	GestionLog g(&in,&out,vecteurOption, heure , nomFichierGraphe);
 	}//--- Fin de main

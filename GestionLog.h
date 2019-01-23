@@ -85,7 +85,7 @@ public:
 
 
     GestionLog (istream * fichierLog, ostream * out ,int option =1 ,
-       Date date = Date ());
+       Date date = Date () , string s = "");
     // Mode d'emploi :
     //
     // Contrat :
@@ -139,7 +139,7 @@ protected:
     // Contrat :
     //
 
-    void gestionOption (istream * fichierLog , ostream * out ,int option =1 , Date d=Date ()  );
+    void gestionOption (istream * fichierLog , ostream * out ,int option =1 , Date d=Date () , string s = ""  );
     // Mode d'emploi :
     // permet de calculer
     // Contrat :

@@ -58,11 +58,11 @@ using namespace std;
 } //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d )
+GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d , string s )
 // Algorithme :
 //
 {
-  gestionOption (fichierLog ,  out ,option , d );
+  gestionOption (fichierLog ,  out ,option , d ,s );
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
@@ -218,7 +218,7 @@ void GestionLog::afficherDixPopulaire()
 }
 
 
-void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option  , Date d )
+void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option  , Date d , string s )
 {
     Lecture <KeyLog , Log> lectureLog (fichierLog);
     unordered_multimap <KeyLog,Log> tableLogs =  lectureLog.LectureLog();
@@ -231,12 +231,15 @@ void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option
       }
     if (bitT)
       {
-        selectionParHeure (tableLogs,d) ;
+        cout << "Warning : only hits between " << (string)d <<" and " << (string)(d+1) << " have been taken  into account" << endl;
+        selectionParHeure (tableLogs,d);
       }
     genereMap (tableLogs);
     if (bitG)
       {
+        cout << "Dot-file " << s << " generated" << endl;
         GenererGraphe(out);
       }
-    afficherDixPopulaire();
+      afficherDixPopulaire();
+
 }
