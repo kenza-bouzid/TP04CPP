@@ -28,6 +28,7 @@ class Arc
 //----------------------------------------------------------------- PUBLIC
 
 public:
+  	friend class GestionLog ;
 //----------------------------------------------------- Méthodes publiques
     // type Méthode ( liste des paramètres );
     // Mode d'emploi :
