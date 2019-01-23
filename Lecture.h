@@ -123,12 +123,13 @@ unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 		informationsLog = decoupageInformationsLog ();
 		if ( informationsLog.size() == 9 )
 		{
-			tableLogs.emplace(make_pair((informationsLog[4],informationsLog[7]),informationsLog ));
+
+			tableLogs.emplace(make_pair(R(informationsLog[4],informationsLog[7]),informationsLog ));
 		}
 		else	// Mauvaise lecture, donc on annule tout
 		{
 			cerr << "Le fichier de logs n'a pas le bon format ! Operaton annulee" << endl;
-			return unordered_map<R,T>();
+			return unordered_multimap<R,T>();
 		}
 	}
 

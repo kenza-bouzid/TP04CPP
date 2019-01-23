@@ -55,7 +55,7 @@ using namespace std;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <GestionLog>" << endl;
 #endif
-} //----- Fin de GestionLog (constructeur de copie)
+} //----- Fin de GestionLog (constructeur de copie)*/
 
 
 GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date d)
