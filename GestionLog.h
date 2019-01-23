@@ -23,6 +23,7 @@
 #include "Log.h"
 #include "Lecture.h"
 #include "KeyLog.h"
+#include "Arc.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -125,7 +126,7 @@ protected:
 //    multimap <int,string>
 
 //----------------------------------------------------- Attributs protégés
-    unordered_multimap<string,unordered_map<string,int>> mapLog;
+    unordered_multimap<string,Arc> mapLog;
     // structure de données utilisée pour stocker les différentes informations
     // relatives aux logs et qui nous sont utiles pour les options -g -e -t et
     // par défaut

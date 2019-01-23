@@ -120,15 +120,15 @@ GestionLog::~GestionLog ( )
 
 void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
 {
-    unordered_map <KeyLog,int> mapTemp;
+    unordered_map <KeyLog,unsigned int> mapTemp;
     for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
     {
       mapTemp[it->first]++;
     }
     for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
     {
-      unordered_map<string,int> arc = {{it->first.referer,it->second}} ;
-      mapLog.emplace (make_pair(it->first.cible, arc) );
+      Arc arc (it->first.referer,it->second) ;
+      mapLog.emplace (make_pair(it->first.cible,arc));
     }
 }
 
@@ -137,7 +137,7 @@ void GestionLog::selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs
   unordered_multimap <KeyLog,Log>::iterator it ;
   for (it = tableLogs.begin(); it != tableLogs.end(); it++)
   {
-    if (it->second.date< date || it->second.date>= (date + Date (1)))
+    if (it->second.date< date || it->second.date>= (date + 1))
     {
       tableLogs.erase(it);
     }
@@ -156,14 +156,13 @@ void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableL
   }
 }
 
-/*size_t calculPopularite (string cible)
+/*size_t GestionLog::calculPopularite (string cible)
 {
   auto range = mapLog.equal_range(cible);
   size_t count = 0 ;
   for (auto it = range.first; it > range.second ; ++it )
   {
-    cout+=it->second.second;
+    count+=mapLog[it->first];
   }
   return count;
-}
-*/
+}*/
