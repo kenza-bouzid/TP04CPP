@@ -17,7 +17,8 @@ using namespace std;
 //------------------------------------------------------- Includes personnels -
 #include "Log.h"
 //------------------------------------------------------------------ CONSTANTES
-
+const string baseUrl = "http://intranet-if.insa-lyon.fr";
+// URL de base a retirer au besoin.
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 //------------------------------------------------------- Methodes publiques --
@@ -31,7 +32,6 @@ Log & Log::operator = ( const Log & log )
 {
 	date = log.date;
 	cible = log.cible;
-	baseReferer = log.baseReferer;
 	referer = log.referer;
 	contenuIndispensable = log.contenuIndispensable;
 
@@ -73,22 +73,17 @@ Log & Log::operator = ( const vector<string> & informations )
 
 	//--- Recuperation du referer
 	// Base de l'url
-	fin = find ( leReferer.begin(), leReferer.end(), ':') + 3;	// On saute ://
-	if ( fin >= leReferer.end() ) return *this;
-	fin = find ( fin, leReferer.end(), '/');	// On va a la fin de la base
-												// 	de l'url
-	deb = leReferer.begin();
-	baseReferer = string ( deb, fin );
+	unsigned int posBaseURL = leReferer.find ( baseUrl );
+	// On essaie de trouver la base dans la string
 
 	// referer sans nom de domaine
-	if( fin < leReferer.end() )
+	if( posBaseURL < leReferer.size() )
 	{
-		referer = string ( fin, leReferer.end() );
+		referer = string ( leReferer.begin() + posBaseURL, leReferer.end() );
 	}
 	else
-		// Cas : https://google.com
 	{
-		referer = "/";
+		referer = leReferer;
 	}
 
 
@@ -114,60 +109,11 @@ Log & Log::operator = ( const vector<string> & informations )
 	return *this;
 }
 
-/* istream & operator >> ( istream & in, Log & log )
-{
-	// On recupere une ligne pour mieux gerer les erreurs de formats
-	string ligne;
-	getline(in, ligne, '\n');
-
-	//--- Recuperation de la date
-	// heure
-	string::iterator deb = ++find(ligne.begin(), ligne.end(), ':');
-	string::iterator fin = find(deb, ligne.end(), ':');
-	if(fin >= ligne.end()) return in;
-	log.date.heure = stoi(string(deb, fin));
-	cout << stoi(string(deb, fin)) << endl;
-	// minutes
-	deb = ++fin;
-	fin = find(deb, ligne.end(), ':');
-	if(fin >= ligne.end()) return in;
-	log.date.minutes = stoi(string(deb, fin));
-
-	//--- Recuperation de la cible
-	deb = find(fin, ligne.end(), '/');
-	fin = find(deb, ligne.end(), ' ');
-	if(fin >= ligne.end()) return in;
-	log.cible = string(deb, fin);
-
-	//--- Recuperation du referer
-	deb = ++find(fin, ligne.end(), '"');
-	deb = ++find(deb, ligne.end(), '"');
-	fin = find(deb, ligne.end(), '"');
-	if(fin >= ligne.end()) return in;
-	log.referer = string(deb, fin);
-
-	//--- Recuperation du type
-	string::reverse_iterator rdeb = log.cible.rbegin();
-	string::reverse_iterator rfin = find(rdeb, log.cible.rend(), '.');
-	string type1(rdeb, rfin);
-	cout << type1 << endl;
-
-	rdeb = log.referer.rbegin();
-	rfin = find(rdeb, log.referer.rend(), '.');
-	string type2(rdeb, rfin);
-	cout << type2 << endl;
-
-	log.contenuIndispensable = Log::estContenuIndispensable(type1) ||
-		Log::estContenuIndispensable(type2);
-
-	return in;
-}//--- Fin de operator >>*/
-
 
 ostream & operator << ( ostream & out, const Log & log )
 {
 	out << "cible : " << log.cible << endl;
-	out << "referer : " << log.baseReferer << " - " << log.referer << endl;
+	out << "referer : " << log.referer << endl;
 	out << "heure : " << log.date.heure << ":" << log.date.minutes << endl;
 	out << "contenu : " << log.contenuIndispensable << endl;
 
@@ -185,10 +131,9 @@ bool operator == (const Log& log1 , const Log& log2 )
 }// --- Fin de operator ==
 
 //---------------------------------------------- Constructeurs - Destructeur --
-Log::Log ( Date laDate, string laCible, string leReferer, string leBaseReferer,
+Log::Log ( Date laDate, string laCible, string leReferer,
 	bool leContenuIndispensable ) : date(laDate), cible(laCible),
-	referer(leReferer), baseReferer(leBaseReferer),
-	contenuIndispensable(leContenuIndispensable)
+	referer(leReferer), contenuIndispensable(leContenuIndispensable)
 {
 #ifdef MAP
 	cout << "Construction Log" << endl;
@@ -197,8 +142,7 @@ Log::Log ( Date laDate, string laCible, string leReferer, string leBaseReferer,
 
 
 Log::Log ( const Log & log ) : date(log.date), cible(log.cible),
-	referer(log.referer), baseReferer ( log.baseReferer),
-	contenuIndispensable(log.contenuIndispensable)
+	referer(log.referer), contenuIndispensable(log.contenuIndispensable)
 {
 #ifdef MAP
 	cout << "Construction Log par copie" << endl;
@@ -207,7 +151,7 @@ Log::Log ( const Log & log ) : date(log.date), cible(log.cible),
 
 
 Log::Log ( const vector<string> & informations ) : date(), cible(""),
-	referer(""), baseReferer(""), contenuIndispensable(false)
+	referer(""), contenuIndispensable(false)
 {
 #ifdef MAP
 	cout << "Construction Log a partir liste informations" << endl;
