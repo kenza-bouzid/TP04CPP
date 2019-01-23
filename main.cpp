@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "Lecture.h"
 #include "KeyLog.h"
+#include "GestionLog.h"
 
 using namespace std;
 
@@ -228,8 +229,8 @@ int main ( int argc, char * argv [] )
 {
 	analyseArguments ( argc, argv );
 
-	// Vecteur pour les options de gestion des logs
-	int vecteurOption = optionCreationGraphe << 2 | 
+	//Vecteur pour les options de gestion des logs
+	int vecteurOption = optionCreationGraphe << 2 |
 			optionGarderIndispensable << 1 |
 			optionHeure;
 
@@ -252,7 +253,6 @@ int main ( int argc, char * argv [] )
 	out.open(nomFichierGraphe, ios_base::out & ~ios_base::trunc);
 	if ( optionCreationGraphe )
 	{
-	
 		if ( ! out )
 		{
 			cerr << "Impossible d'acceder au fichier pour ecrire le graphe !"
@@ -267,8 +267,6 @@ int main ( int argc, char * argv [] )
 			out.close();
 			out.open(nomFichierGraphe, ios_base::in | ios_base::trunc);
 		}
-
 	}
-
-	GestionLog g(&in, vecteurOption, heure);
-}//--- Fin de main
+	GestionLog g(&in,&out,vecteurOption, heure);
+	}//--- Fin de main
