@@ -12,6 +12,7 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include <iostream>
+#include <string>
 
 using namespace std;
 //------------------------------------------------------------------ Constantes
@@ -63,6 +64,13 @@ public :
 	//	Sert aussi a ajouter des heures (en utilisant le constructeur).
 	//	date : la date a ajouter.
 	//	retour : reference sur la date qui a ete modifiee.
+	// Contrat :
+	//	Aucun contrat.
+
+	operator string () const;
+	// Mode d'emploi
+	//	Permet de transformer la date en string pour l'affichage.
+	//	retour : la date en format string
 	// Contrat :
 	//	Aucun contrat.
 

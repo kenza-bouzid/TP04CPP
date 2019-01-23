@@ -65,6 +65,18 @@ Date & Date::operator += ( const Date & date )
 }//--- Fin de operator +=
 
 
+Date::operator string() const
+{
+	string dateString = to_string(heure) + "h";
+	if(minutes != 0)
+	{
+		 dateString += to_string(minutes);
+	}
+	
+	return dateString;
+}//--- Fin de operator string
+
+
 Date operator + ( const Date & date1, const Date & date2 )
 {
 	Date date ( date1 );
