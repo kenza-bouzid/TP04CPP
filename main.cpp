@@ -17,6 +17,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cstring>
 #include <algorithm>
@@ -25,6 +26,7 @@
 #include "main.h"
 #include "Log.h"
 #include "Lecture.h"
+#include "KeyLog.h"
 
 using namespace std;
 
@@ -46,6 +48,50 @@ static bool optionGarderIndispensable;	//Si il faut garder que les contenus indi
 
 
 //------------------------------------------------------ Fonctions privées
+static int strtoi ( const string & chaine )
+// Mode d'emploi :
+//	Permet de transformer une chaine en entree representant un entier non 
+//		signe en un entier
+//	Essentiellement une reecriture de stoi, mais sans erreur.
+//	Si le format en entree ne correspond pas, renvoie -1
+// Contrat :
+//	Aucun.
+{
+	int res = 0;
+	string::const_iterator deb = chaine.cbegin();
+	string::const_iterator fin = chaine.cend();
+
+	while ( deb != fin && *deb != '\0')
+	{
+		if ( *deb >= 48 && *deb <= 57)
+		{
+			res = res * 10 + (*deb - 48);
+		}
+		else
+		{
+			return -1;
+		}
+
+		++deb;
+	}
+
+	return res;
+}
+
+
+static void erreurOption ()
+// Mode d'emploi :
+//	Genere un message d'erreur indiquant que les parametres d'entree n'ont pas
+//		le bon format.
+//	Ferme le programme.
+// Contrat :
+//	Aucun contrat.
+{
+	cerr << "Mauvais format des parametres en entree !" << endl;
+	exit(-1);
+}
+
+
 static void analyseArguments ( int argc, char * argv [])
 // Mode d'emploi :
 //	Permet d'analyser les arguments fournis lors de l'appel de l'executable,
@@ -55,8 +101,6 @@ static void analyseArguments ( int argc, char * argv [])
 {
 	enum Option { RIEN, G, E, T };	//Pour savoir quelle option est en cours de traitement.
 	Option optionEnCours = RIEN;
-	nomFichierLog = "";
-	nomFichierGraphe = "";
 
 
 	for (int i = 1; i < argc; i++ )
@@ -67,14 +111,29 @@ static void analyseArguments ( int argc, char * argv [])
 			switch(*(argv[i] + 1))
 			{
 				case 'g':
+					if(optionCreationGraphe == true)	//Option deja rentree
+					{
+						erreurOption();
+					}
+
 					optionEnCours = G;
 					optionCreationGraphe = true;
 					break;
 				case 'e':
-					optionEnCours = E;
+					if(optionGarderIndispensable == true)
+						//Option deja rentree
+					{
+						erreurOption();
+					}
+					optionEnCours = RIEN;
 					optionGarderIndispensable = true;
 					break;
 				case 't':
+					if(optionHeure == true)
+						//Option deja rentree
+					{
+						erreurOption();
+					}
 					optionEnCours = T;
 					optionHeure = true;
 					break;
@@ -91,19 +150,20 @@ static void analyseArguments ( int argc, char * argv [])
 			switch ( optionEnCours )
 			{
 				case RIEN:
-					nomFichierLog = nomFichierLog + " " + argv[i];
+					if(! nomFichierLog.empty())	//Deja un nom de fichier
+					{
+						erreurOption();
+					}
+
+					nomFichierLog = argv[i];
 					break;
 				case G:
-					nomFichierGraphe = nomFichierGraphe + " " + argv[i];
-
-					break;
-				case E:
-					nomFichierLog = nomFichierLog + " " + argv[i];
-					graphe = argv[i];
-					if(find(graphe.begin(), graphe.end(), '.') < graphe.end())
+					if(! nomFichierGraphe.empty())	//Deja un nom de fichier
 					{
-						optionEnCours = RIEN;
+						erreurOption();
 					}
+
+					nomFichierGraphe = argv[i];
 					optionEnCours = RIEN;
 					break;
 				case T:
@@ -120,14 +180,12 @@ static void analyseArguments ( int argc, char * argv [])
 					else
 					{
 						heure = Date(
-							stoi(string(stringHeure.begin(), separateur)),
-							stoi(string(++separateur, stringHeure.end()))
+							strtoi(string(stringHeure.begin(), separateur - 1)),
+							strtoi(string(++separateur, stringHeure.end()))
 							);
 
 						// On verifie que stoi ai bien donne les bonnes valeurs
-						if( (heure.heure == 0 || heure.heure == 0) && 
-							find(stringHeure.begin(), stringHeure.end(), '0') <
-								stringHeure.end() )
+						if( heure.heure == -1 || heure.minutes == -1)
 						{
 							cerr << "Heure incorrecte !" << endl;
 							exit(-1);
@@ -135,14 +193,17 @@ static void analyseArguments ( int argc, char * argv [])
 					}
 
 					optionEnCours = RIEN;
+					break;
 			}
 		}
 	}
 
+#ifdef MAP
 	cout << nomFichierLog << endl;
 	cout << optionCreationGraphe << " : " << nomFichierGraphe << endl;
 	cout << optionGarderIndispensable << endl;
 	cout << optionHeure << " : " << heure << endl;
+#endif
 
 	if ( nomFichierLog == "" )
 	{
@@ -166,7 +227,15 @@ static void analyseArguments ( int argc, char * argv [])
 //---------------------------------------------------- Fonctions publiques
 int main ( int argc, char * argv [] )
 {
-
 	analyseArguments ( argc, argv );
+
+	ifstream f;
+	f.open(nomFichierLog);
+
+	if(f.good())
+	{
+		Lecture<KeyLog, Log> l(&f);
+		l.LectureLog();
+	}
 }//--- Fin de main
 

@@ -5,7 +5,7 @@
 
 #--- VARIABLES ---
 #Fichiers
-FICHIER_SORTIE := exec
+FICHIER_SORTIE := analog
 CPP := $(wildcard *.cpp)
 LIBRAIRIES := 
 CMD = 
