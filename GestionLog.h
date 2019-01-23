@@ -53,6 +53,7 @@ typedef enum {
 
 class GestionLog
 {
+  friend class Arc;
 //----------------------------------------------------------------- PUBLIC
 
 public:
@@ -62,6 +63,14 @@ public:
     //
     // Contrat :
     //
+
+
+    void GenererGraphe ( ostream * out ) const;
+    // Mode d'emploi :
+    //  Permet de generer le graphe associe aux logs
+    //  out : le flux sur lequel ecrire le graphe.
+    // Contrat :
+    //  Aucun.
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -124,6 +133,7 @@ protected:
     size_t calculPopularite (string cible);
 
 //    multimap <int,string>
+
 
 //----------------------------------------------------- Attributs protégés
     unordered_multimap<string,Arc> mapLog;

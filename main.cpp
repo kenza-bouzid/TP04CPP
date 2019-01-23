@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "Lecture.h"
 #include "KeyLog.h"
+#include "GestionLog.h"
 
 using namespace std;
 
@@ -198,7 +199,7 @@ static void analyseArguments ( int argc, char * argv [])
 		}
 	}
 
-#ifdef MAP
+#ifndef MAP
 	cout << nomFichierLog << endl;
 	cout << optionCreationGraphe << " : " << nomFichierGraphe << endl;
 	cout << optionGarderIndispensable << endl;
@@ -234,8 +235,17 @@ int main ( int argc, char * argv [] )
 
 	if(f.good())
 	{
-		Lecture<KeyLog, Log> l(&f);
-		l.LectureLog();
+		GestionLog g(&f, OptionGestionLog::RIEN);
+
+		if(optionCreationGraphe)
+		{
+			ofstream out(nomFichierGraphe);
+			if( out )
+			{
+				g.GenererGraphe(&out);
+			}
+		}
+		
 	}
 }//--- Fin de main
 

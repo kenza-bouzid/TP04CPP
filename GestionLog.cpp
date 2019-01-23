@@ -166,3 +166,57 @@ size_t GestionLog::calculPopularite (string cible)
   }
   return count;
 }
+
+
+void GestionLog::GenererGraphe ( ostream * out ) const
+{
+  string ecriture = "";
+
+  // Sauvegarde des sommets
+  unordered_map <string, int> sommets;
+  int numeroSommet = 0;
+
+  int sommetA, sommetB;
+
+  // --- Ecriture de tous les arcs
+  auto end = mapLog.cend();
+  for ( auto i = mapLog.cbegin(); i != end; ++i)
+  {
+    if( sommets.find(i->first) == sommets.end() )
+      //Insertion nouveau sommet
+    {
+      sommets.insert(make_pair(i->first, numeroSommet));
+      sommetA = numeroSommet++;
+    }
+    else
+    {
+      sommetA = sommets[i->first];
+    }
+
+    if( sommets.find(i->second.referer) == sommets.end())
+      //Insertion nouveau sommet
+    {
+      sommets.insert(make_pair(i->second.referer, numeroSommet));
+      sommetB = numeroSommet++;
+    }
+    else
+    {
+      sommetB = sommets[i->second.referer];
+    }
+    
+    // Ecriture
+    ecriture = ecriture + "node" + to_string(sommetB) + " -> node" + to_string(sommetA) + " [label=\"" + to_string(i->second.cardinalite) + "\"];\n";
+  }
+
+  // --- Ecriture de tous les sommets
+  for ( auto i = sommets.begin(); i != sommets.end(); ++i )
+  {
+    ecriture = "node" + to_string(i->second) + " [label=\"" + i->first + "\"];\n" + ecriture;
+  }
+
+  // --- Ecriture finale
+  if ( out->good() )
+  {
+    *out << "digraph {\n" << ecriture << "}";
+  }
+}
