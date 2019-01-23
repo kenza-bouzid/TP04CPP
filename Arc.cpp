@@ -45,7 +45,7 @@ Arc & Arc::operator = ( const Arc & unArc )
 
 bool Arc::operator < ( const Arc & unArc )
 {
-  return cardinalite < unArc.cardinalite ;
+  return cardinalite > unArc.cardinalite ;
 }//----- Fin de operator <
 
 void Arc::Afficher (const string s ) const
@@ -54,7 +54,7 @@ void Arc::Afficher (const string s ) const
   {
     cout << s << endl ;
   }
-  cout << referer << " (" << cardinalite << " hits" << endl;
+  cout << referer << " (" << cardinalite << " hits)" << endl;
 }
 
 //-------------------------------------------- Constructeurs - destructeur

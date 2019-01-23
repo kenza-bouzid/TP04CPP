@@ -58,51 +58,16 @@ using namespace std;
 } //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (istream * fichierLog , OptionGestionLog OptionLog , Date d)
+GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d )
 // Algorithme :
 //
 {
-  Lecture <KeyLog , Log> lectureLog (fichierLog);
-  unordered_multimap <KeyLog,Log> tableLogs =  lectureLog.LectureLog();
-
-  switch (OptionLog)
-  {
-    case RIEN:
-      genereMap (tableLogs);
-      break;
-    case E :
-      selectionParExtension (tableLogs) ;
-      genereMap (tableLogs);
-      break;
-    case T :
-      selectionParHeure (tableLogs,d) ;
-      genereMap (tableLogs);
-      break;
-    case G :
-      break;
-    case ET:
-      selectionParHeure (tableLogs,d);
-      selectionParExtension (tableLogs);
-      genereMap (tableLogs);
-      break;
-    case EG:
-      selectionParExtension (tableLogs);
-      genereMap (tableLogs);
-      break;
-    case ETG:
-      selectionParExtension (tableLogs);
-      selectionParHeure (tableLogs,d);
-      genereMap (tableLogs);
-      break;
-    default:
-      break;
-  }
+  gestionOption (fichierLog ,  out ,option , d );
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
 
-    dixPopulaire();
-    afficherDixPopulaire();
+
 } //----- Fin de GestionLog*/
 
 
@@ -205,7 +170,7 @@ void GestionLog::GenererGraphe ( ostream * out ) const
     {
       sommetB = sommets[i->second.referer];
     }
-    
+
     // Ecriture
     ecriture = ecriture + "node" + to_string(sommetB) + " -> node" + to_string(sommetA) + " [label=\"" + to_string(i->second.cardinalite) + "\"];\n";
   }
@@ -222,7 +187,6 @@ void GestionLog::GenererGraphe ( ostream * out ) const
     *out << "digraph {\n" << ecriture << "}";
   }
 }
-
 
 vector<Arc> GestionLog::dixPopulaire ()
 {
@@ -244,11 +208,35 @@ vector<Arc> GestionLog::dixPopulaire ()
 }
 
 
-void GestionLog::afficherDixPopulaire() 
+void GestionLog::afficherDixPopulaire()
 {
   vector<Arc> listeArc = dixPopulaire();
-  for (auto it = listeArc.begin(); it != listeArc.end(); ++it)
+  for (auto it = listeArc.begin(); it != (listeArc.begin()+10 ) &&  it != listeArc.end(); ++it)
   {
     it->Afficher();
   }
+}
+
+
+void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option  , Date d )
+{
+    Lecture <KeyLog , Log> lectureLog (fichierLog);
+    unordered_multimap <KeyLog,Log> tableLogs =  lectureLog.LectureLog();
+    bool bitG = (option>>2) & 1 ;
+    bool bitE = (option>>1) & 1 ;
+    bool bitT = option & 1 ;
+    if (bitE)
+      {
+        selectionParExtension (tableLogs) ;
+      }
+    if (bitT)
+      {
+        selectionParHeure (tableLogs,d) ;
+      }
+    genereMap (tableLogs);
+    if (bitG)
+      {
+        GenererGraphe(out);
+      }
+    afficherDixPopulaire();
 }

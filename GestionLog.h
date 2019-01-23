@@ -54,24 +54,15 @@ typedef enum {
 
 class GestionLog
 {
-  friend class Arc;
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    void GenererGraphe ( ostream * out ) const ;
     // Mode d'emploi :
-    //
+    // permet de calculer
     // Contrat :
     //
-
-
-    void GenererGraphe ( ostream * out ) const;
-    // Mode d'emploi :
-    //  Permet de generer le graphe associe aux logs
-    //  out : le flux sur lequel ecrire le graphe.
-    // Contrat :
-    //  Aucun.
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -93,7 +84,7 @@ public:
   	//	Aucun contrat.
 
 
-    GestionLog (istream * fichierLog , OptionGestionLog OptionLog ,
+    GestionLog (istream * fichierLog, ostream * out ,int option =1 ,
        Date date = Date ());
     // Mode d'emploi :
     //
@@ -105,6 +96,7 @@ public:
     //  Destructeur de la classe GestionLog
     // Contrat :
     //
+
 
 //------------------------------------------------------------------ PRIVE
 
@@ -141,15 +133,19 @@ protected:
     // permet de calculer
     // Contrat :
     //
-    void afficherDixPopulaire() ; 
+    void afficherDixPopulaire() ;
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
     //
 
+    void gestionOption (istream * fichierLog , ostream * out ,int option =1 , Date d=Date ()  );
+    // Mode d'emploi :
+    // permet de calculer
+    // Contrat :
+    //
 
 //    multimap <int,string>
-
 
 //----------------------------------------------------- Attributs protégés
     unordered_multimap<string,Arc> mapLog;
@@ -167,46 +163,3 @@ protected:
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 
 #endif // GestionLog_H
-
-//---------- Définition de la fonction de hashage ---------
-/*namespace std
-{
-  template <>
-  struct hash<string>
-  {
-    // fonction de décalage de bit circulaire
-    unsigned int shift_rotate(unsigned int val, unsigned int n)
-    {
-      n = n%(sizeof(unsigned int)*8);
-      return (val<<n) | (val>> (sizeof(unsigned int)*8-n));
-    }
-    // fonction d'encodage d'une chaîne de caractères
-    unsigned int Encode(string key)
-    {
-       unsigned int i;
-       unsigned int val = 0;
-       unsigned int power = 0;
-       for (i=0;i<strlen(key);i++)
-       {
-         val += shift_rotate(key[i],power*7);
-         power++;
-       }
-       return val;
-    }
-    // fonction de hachage simple qui prend le modulo
-    unsigned int hash(unsigned int val, unsigned int size)
-    {
-       return val%size;
-    }
-    // fonction de hachage complète à utiliser
-    unsigned int HashFunction(string key, unsigned int size)
-    {
-       return hash(Encode(key),size);
-    }
-    // Surgarche de l'opérateur ()
-    size_t operator()(const string& s) const
-    {
-        return HashFunction(s,strlen(s));
-    }
-  };
-}*/

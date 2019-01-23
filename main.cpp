@@ -27,7 +27,6 @@
 #include "Log.h"
 #include "Lecture.h"
 #include "KeyLog.h"
-#include "GestionLog.h"
 
 using namespace std;
 
@@ -51,7 +50,7 @@ static bool optionGarderIndispensable;	//Si il faut garder que les contenus indi
 //------------------------------------------------------ Fonctions privées
 static int strtoi ( const string & chaine )
 // Mode d'emploi :
-//	Permet de transformer une chaine en entree representant un entier non 
+//	Permet de transformer une chaine en entree representant un entier non
 //		signe en un entier
 //	Essentiellement une reecriture de stoi, mais sans erreur.
 //	Si le format en entree ne correspond pas, renvoie -1
@@ -116,7 +115,6 @@ static void analyseArguments ( int argc, char * argv [])
 					{
 						erreurOption();
 					}
-
 					optionEnCours = G;
 					optionCreationGraphe = true;
 					break;
@@ -199,7 +197,7 @@ static void analyseArguments ( int argc, char * argv [])
 		}
 	}
 
-#ifndef MAP
+#ifdef MAP
 	cout << nomFichierLog << endl;
 	cout << optionCreationGraphe << " : " << nomFichierGraphe << endl;
 	cout << optionGarderIndispensable << endl;
@@ -235,17 +233,7 @@ int main ( int argc, char * argv [] )
 
 	if(f.good())
 	{
-		GestionLog g(&f, OptionGestionLog::RIEN);
-
-		if(optionCreationGraphe)
-		{
-			ofstream out(nomFichierGraphe);
-			if( out )
-			{
-				g.GenererGraphe(&out);
-			}
-		}
-		
+		Lecture<KeyLog, Log> l(&f);
+		l.LectureLog();
 	}
 }//--- Fin de main
-
