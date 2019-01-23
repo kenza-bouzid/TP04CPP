@@ -17,6 +17,7 @@
 #include <cstring>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 #include <fstream>
 #include <unordered_map>
 #include "Date.h"
@@ -131,6 +132,21 @@ protected:
     //
 
     size_t calculPopularite (string cible);
+    // Mode d'emploi :
+    // permet de calculer
+    // Contrat :
+    //
+    vector<Arc> dixPopulaire ();
+    // Mode d'emploi :
+    // permet de calculer
+    // Contrat :
+    //
+    void afficherDixPopulaire() ; 
+    // Mode d'emploi :
+    // permet de calculer
+    // Contrat :
+    //
+
 
 //    multimap <int,string>
 
