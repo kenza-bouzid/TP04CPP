@@ -74,7 +74,7 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
-	bool operator < (const Log& log ) const;
+	bool operator < (const Log & log ) const;
 	// Mode d'emploi :
 	//	Permet de comparer deux logs selon leur cible (ordre alphabétique)
 	//	log : le log à comparer
@@ -83,7 +83,7 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
-	friend bool operator == (const Log& log1 , const Log& log2);
+	friend bool operator == (const Log & log1 , const Log & log2);
 	// Mode d'emploi :
 	//	Permet de comparer deux logs selon leur cible
 	//	log1 et log 2 : les logs à comparer
@@ -96,14 +96,12 @@ public :
 
 
 	//-------------------------------------- Constructeurs - Destructeur --
-	Log ( Date laDate = Date(), string laCible = "", string leReferer = "",
-		string leBaseReferer = "", bool leContenuIndispensable = false);
+	Log ( Date laDate = Date(), string laCible = "", string leReferer = "", bool leContenuIndispensable = false);
 	// Mode d'emploi :
 	//	Constructeur de la classe Log
 	//	laDate : la date du Log
 	//	laCible : la cible du Log
 	//	leReferer : le referer du Log
-	//	leBaseReferer : la base du referer du Log
 	//	leConteneuIndispensable : si le contenu est Image, JS, CSS -> false
 	// Contrat :
 	//	Aucun contrat.
@@ -161,8 +159,7 @@ protected :
 	string cible;				// Cible de la requete du Log
 
 	string referer;				// referer (source) du Log (sans nom de
-								// 	domaine)
-	string baseReferer;			// le nom de domaine du referer
+								// 	domaine, si la source est locale)
 
 	bool contenuIndispensable;
 		// false : CSS, Image, JS
