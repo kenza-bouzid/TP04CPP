@@ -1,16 +1,46 @@
-.TH man 8 "Fevrier 2018" "1.0" "Page de Manuel de analog"
-.SH NAME
-nuseradd \- create a new LDAP user
+.TH man 42 "Février 2018" "42" "Page de Manuel de analog"
+
+.SH NOM
+analog \- Programme d'analyse de Logs Apache
+
 .SH SYNOPSIS
-nuseradd [USERNAME]
+analog [-g nomfichier.dot] [-e] [-t heure] fichier.log
+
 .SH DESCRIPTION
-nuseradd is high level shell program for adding users to LDAP server.  On Debian, administrators should usually use nuseradd.debian(8) instead.
+analog permet de lire, d'analyser et de présenter sous une forme synthétique des
+logs Apache.
+
 .SH OPTIONS
-The nuseradd does not take any options. However, you can supply username.
-.SH SEE ALSO
-Rien a voir ici
+\fBAucune option\fR
+: lecture du fichier de Logs fourni en paramètres. Le programme
+affiche ensuite un top 10 des pages les plus visitées qui respectent les critères
+imposés.
+
+\fB-g nomfichier.dot\fR
+: le programme crée un graphe dans le format .dot qui représente
+la navigation entre les différentes ressources présentes dans le fichier de Logs.
+Les noeuds sont les ressources accédées et les arcs représentent le chemin de navigation.
+Le nombre de fois que ce chemin a été emprunté est également indiqué.
+
+.BR -e
+: le programme ignore tous les Logs qui font référence à un referer ou une cible qui possèdent
+une extension de type image, javascript ou css. Cette sélection impacte l'effet
+des deux options précédentes : le top 10 et le graphe généré (si demandé)
+ne tiennent plus compte des fichiers de type image, javascript ou css.
+
+\fB-t heure\fR
+: le programme ne conserve que les Logs qui ont été réalisés dans la plage
+horaire spécifiée par le paramètre "heure". Le format d'entrée a respecter est le suivant :
+\fBHH:MM\fR.
+La sélection sur l'horaire suit la règle suivante : seuls les Logs ayant été réalisés dans la tranche [ heure ; heure + 1 [ sont conservés.
+Comme pour l'option -e, cette option impacte les résultats obtenus sur le top 10 ou le graphe.
+
+Toutes les options présentées peuvent être combinées ensembles. L'ordre d'entrée des options n'a pas d'importance ni d'impact sur le résultat de l'exécution du programme.
+
 .SH BUGS
-Pas de bugs connus
-.SH AUTHOR
+Pas de bugs connus.
+
+.SH AUTEURS
 Kenza BOUZID        : kenza.bouzid@insa-lyon.fr
+
 Pierre-Yves GENEST  : pierre-yves.genest@insa-lyon.fr
