@@ -43,6 +43,28 @@ public :
 	//	Aucun contrat.
 
 
+	static bool Strtoi ( const string & chaine, int * res );
+	// Mode d'emploi :
+	//	Permet de transformer une chaine en entree representant un entier signe
+	//		en un entier
+	//	chaine : la chaine a decoder : elle peut contenir + ou - pour indiquer le
+	//		signe (en premiere position)
+	//	res : le resultat de la conversion.
+	//	retour : true si la conversion est valide, false sinon.
+	// Contrat :
+	//	Aucun.
+
+
+	static int Strtoui ( const string & chaine );
+	// Mode d'emploi :
+	//	Permet de transformer une chaine en entree representant un entier non
+	//		signe en un entier
+	//	Essentiellement une reecriture de stoi, mais sans erreur.
+	//	Si le format en entree ne correspond pas, renvoie -1
+	// Contrat :
+	//	Aucun.
+
+
 	//------------------------------------------- Surcharge d'operateurs --
 	Log & operator = ( const Log & log );
 	// Mode d'emploi :

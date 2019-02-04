@@ -125,7 +125,9 @@ unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 		if ( informationsLog.size() == 9 )
 		{
 			T log(informationsLog);
-
+#ifdef MAP
+			cout << log << endl;
+#endif
 			tableLogs.insert(make_pair(log.GetKey(), log));
 		}
 		else	// Mauvaise lecture, donc on annule tout

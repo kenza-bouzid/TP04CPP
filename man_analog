@@ -1,0 +1,16 @@
+.TH man 8 "Fevrier 2018" "1.0" "Page de Manuel de analog"
+.SH NAME
+nuseradd \- create a new LDAP user
+.SH SYNOPSIS
+nuseradd [USERNAME]
+.SH DESCRIPTION
+nuseradd is high level shell program for adding users to LDAP server.  On Debian, administrators should usually use nuseradd.debian(8) instead.
+.SH OPTIONS
+The nuseradd does not take any options. However, you can supply username.
+.SH SEE ALSO
+Rien a voir ici
+.SH BUGS
+Pas de bugs connus
+.SH AUTHOR
+Kenza BOUZID        : kenza.bouzid@insa-lyon.fr
+Pierre-Yves GENEST  : pierre-yves.genest@insa-lyon.fr

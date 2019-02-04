@@ -1,5 +1,5 @@
 /******************************************************************************
-		Date -  
+		Date -
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -72,7 +72,7 @@ Date::operator string() const
 	{
 		 dateString += to_string(minutes);
 	}
-	
+
 	return dateString;
 }//--- Fin de operator string
 
@@ -100,6 +100,21 @@ Date::Date ( int lHeure, int lesMinutes ) : heure(lHeure),
 	cout << "Construction Date : heure=" << heure << " minutes="
 		<< minutes << endl;
 #endif
+	// Gestion des heures et minutes negatives
+	int retenue = minutes / 60;
+	minutes = minutes % 60;
+
+	if(minutes < 0)
+	{
+		minutes = 60 + minutes;
+		retenue--;
+	}
+
+	heure = ( heure + retenue ) % 24;
+	if ( heure < 0 )
+	{
+		heure = 24 + heure;
+	}
 }//--- Fin de Date
 
 
@@ -119,5 +134,3 @@ Date::~Date ()
 }//--- Fin de ~Date
 ///////////////////////////////////////////////////////////////////////// PRIVE
 //------------------------------------------------------- Methodes protegees --
-
-

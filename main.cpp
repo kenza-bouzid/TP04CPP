@@ -45,41 +45,11 @@ static bool optionCreationGraphe;	// Si l'option graphe est activee
 static Date heure(-1, -1);	// Heure pour le creneau horaire specifie
 static bool optionHeure;	// Si l'option de creneau horaire est activee
 
-static bool optionGarderIndispensable;	//Si il faut garder que les contenus indispensables (hors image, css, javascript...)
+static bool optionGarderIndispensable; //Si il faut garder que les contenus
+					// indispensables (hors image, css, javascript...)
 
 
 //------------------------------------------------------ Fonctions privées
-static int strtoi ( const string & chaine )
-// Mode d'emploi :
-//	Permet de transformer une chaine en entree representant un entier non
-//		signe en un entier
-//	Essentiellement une reecriture de stoi, mais sans erreur.
-//	Si le format en entree ne correspond pas, renvoie -1
-// Contrat :
-//	Aucun.
-{
-	int res = 0;
-	string::const_iterator deb = chaine.cbegin();
-	string::const_iterator fin = chaine.cend();
-
-	while ( deb != fin && *deb != '\0')
-	{
-		if ( *deb >= 48 && *deb <= 57)
-		{
-			res = res * 10 + (*deb - 48);
-		}
-		else
-		{
-			return -1;
-		}
-
-		++deb;
-	}
-
-	return res;
-}
-
-
 static void erreurOption ()
 // Mode d'emploi :
 //	Genere un message d'erreur indiquant que les parametres d'entree n'ont pas
@@ -103,6 +73,13 @@ static void analyseArguments ( int argc, char * argv [])
 	enum Option { RIEN, G, E, T };	//Pour savoir quelle option est en cours de traitement.
 	Option optionEnCours = RIEN;
 
+	if( argc == 1 )
+	{
+		cout << "Format d'entree incorrect" << endl;
+		cout << "Pour obtenir de l'aide, utilisez la commande man ./analog_man"
+			<< endl;
+		exit(-1);
+	}
 
 	for (int i = 1; i < argc; i++ )
 	{
@@ -180,8 +157,8 @@ static void analyseArguments ( int argc, char * argv [])
 					else
 					{
 						heure = Date(
-							strtoi(string(stringHeure.begin(), separateur - 1)),
-							strtoi(string(++separateur, stringHeure.end()))
+							Log::Strtoui(string(stringHeure.begin(), separateur - 1)),
+							Log::Strtoui(string(++separateur, stringHeure.end()))
 							);
 
 						// On verifie que stoi ai bien donne les bonnes valeurs
@@ -199,6 +176,7 @@ static void analyseArguments ( int argc, char * argv [])
 	}
 
 #ifdef MAP
+	cout << "Description des entrees du main" << endl;
 	cout << nomFichierLog << endl;
 	cout << optionCreationGraphe << " : " << nomFichierGraphe << endl;
 	cout << optionGarderIndispensable << endl;
@@ -249,6 +227,8 @@ int main ( int argc, char * argv [] )
 	}
 
 	// Gestion du fichier pour le graphe
+	//		Si l'option n'est pas demande, le fichier ne s'ouvre pas,
+	//		car il y a erreur
 	ofstream out;
 	out.open(nomFichierGraphe, ios_base::out & ~ios_base::trunc);
 	if ( optionCreationGraphe )

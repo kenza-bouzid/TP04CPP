@@ -7,8 +7,8 @@
 #Fichiers
 FICHIER_SORTIE := analog
 CPP := $(wildcard *.cpp)
-LIBRAIRIES := 
-CMD = 
+LIBRAIRIES :=
+CMD =
 
 DIR = obj
 O := $(patsubst %,$(DIR)/%,$(CPP:.cpp=.o))
@@ -29,15 +29,17 @@ EDITION_FLAGS :=
 #Variables de commande
 ECHO := echo
 RM := rm
-RM_FLAGS := -f 
+RM_FLAGS := -f -r
 CLEAN := clean
 MAKE := make
 VALGRIND := valgrind --leak-check=yes
 GDB := gdb
 
 
+
 #--- COMMANDES ---
 compil : $(FICHIER_SORTIE)
+
 
 #Edition de Lien
 $(FICHIER_SORTIE) : $(O)
@@ -57,7 +59,7 @@ clean :
 #Suppression
 suppr :
 	@echo "Nettoyage ..."
-	$(RM) $(RM_FLAGS) $(FICHIER_SORTIE) $(O) $(DEP)
+	$(RM) $(RM_FLAGS) $(FICHIER_SORTIE) $(DIR)
 
 #Valgrind
 valgrind :

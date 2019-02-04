@@ -27,6 +27,78 @@ KeyLog Log::GetKey ( ) const
 	return KeyLog ( cible, referer );
 }//--- Fin de GetKey
 
+
+bool Log::Strtoi ( const string & chaine, int * res )
+{
+	*res = 0;
+	bool estNeg = false;	// Si le nombre est negatif
+
+	if(chaine.size() == 0)
+	{
+		return false;
+	}
+
+	string::const_iterator deb = chaine.cbegin();
+	string::const_iterator fin = chaine.cend();
+
+	//Signe en debut de chaine
+	if(*deb == '+')
+	{
+		++deb;
+	}
+	else if(*deb == '-')
+	{
+		estNeg = true;
+		++deb;
+	}
+
+	// Lecture du nombre
+	while ( deb != fin && *deb != '\0')
+	{
+		if ( *deb >= 48 && *deb <= 57)
+		{
+			*res = (*res) * 10 + (*deb - 48);
+		}
+		else
+		{
+			return false;
+		}
+
+		++deb;
+	}
+
+	if(estNeg)
+	{
+		*res = - *res;
+	}
+	return true;
+}//--- Fin de Strtoi
+
+
+int Log::Strtoui ( const string & chaine )
+{
+	int res = 0;
+	string::const_iterator deb = chaine.cbegin();
+	string::const_iterator fin = chaine.cend();
+
+	while ( deb != fin && *deb != '\0')
+	{
+		if ( *deb >= 48 && *deb <= 57)
+		{
+			res = res * 10 + (*deb - 48);
+		}
+		else
+		{
+			return -1;
+		}
+
+		++deb;
+	}
+
+	return res;
+}//--- Fin de Strtoui
+
+
 //-------------------------------------------------- Surcharge d'operateurs --
 Log & Log::operator = ( const Log & log )
 {
@@ -55,13 +127,21 @@ Log & Log::operator = ( const vector<string> & informations )
 	string::iterator deb = ++find ( laDate.begin(), laDate.end(), ':' );
 	string::iterator fin = find ( deb, laDate.end(), ':' );
 	if ( deb >= fin ) return *this;
-	date.heure = stoi(string(deb, fin));
+	date.heure = Strtoui ( string(deb, fin) );
 
 	// minutes
 	deb = ++fin;
 	fin = find ( deb, laDate.end(), ':' );
 	if ( deb >= fin ) return *this;
-	date.minutes = stoi ( string ( deb, fin ) );
+	date.minutes = Strtoui ( string ( deb, fin ) );
+
+	// Decalage horaire
+	deb = ++find(fin, laDate.end(), ' ');
+	if ( deb >= laDate.end() ) return *this;
+	int valDecalage;
+	if ( ! Strtoi ( string ( deb, laDate.end() ), &valDecalage ) ) return *this;
+	Date decalage( valDecalage / 100, valDecalage % 100 );
+	date += decalage;
 
 
 	//--- Recuperation de la cible
@@ -107,7 +187,7 @@ Log & Log::operator = ( const vector<string> & informations )
 			estContenuIndispensable ( extension2 );
 
 	return *this;
-}
+}//--- Fin de operator =
 
 
 ostream & operator << ( ostream & out, const Log & log )
@@ -118,17 +198,20 @@ ostream & operator << ( ostream & out, const Log & log )
 	out << "contenu : " << log.contenuIndispensable << endl;
 
 	return out;
-}
+}//--- Fin de operator <<
+
 
 bool Log::operator < (const Log& log ) const
 {
 		return cible < log.cible ;
 }//--- Fin de operator <
 
+
 bool operator == (const Log& log1 , const Log& log2 )
 {
 	return !strcmp(log1.cible.c_str(),log2.cible.c_str()) ;
 }// --- Fin de operator ==
+
 
 //---------------------------------------------- Constructeurs - Destructeur --
 Log::Log ( Date laDate, string laCible, string leReferer,
@@ -158,15 +241,8 @@ Log::Log ( const vector<string> & informations ) : date(), cible(""),
 #endif
 
 	*this = informations;
-}
+}//--- Fin de Log
 
-/*Log::Log (string laCible ) : date () , cible (laCible) , referer (""),
-	 baseReferer(""), contenuIndispensable(false)
-{
-	#ifdef MAP
-		cout << "Construction Log fictif à partir d'une cible uniquement" << endl;
-	#endif
-}*/
 
 Log::~Log()
 {
@@ -178,28 +254,19 @@ Log::~Log()
 
 ///////////////////////////////////////////////////////////////////////// PRIVE
 //------------------------------------------------------- Methodes protegees --
+static string extensions[] = { "js", "css", "jpg", "jpeg", "png", "ico", "bmp",
+				"svg", "gif", "ics"};
+const int TAILLE_EXTENSIONS = 10;
+
 bool Log::estContenuIndispensable ( string & extension )
 {
-	if( extension.compare("js") == 0 )
+	for ( int i = 0; i < TAILLE_EXTENSIONS; i++ )
 	{
-		return false;
-	}
-	else if( extension.compare("css") == 0 )
-	{
-		return false;
-	}
-	else if( extension.compare("jpg") == 0 )
-	{
-		return false;
-	}
-	else if( extension.compare("jpeg") == 0 )
-	{
-		return false;
-	}
-	else if( extension.compare("png") == 0 )
-	{
-		return false;
+		if ( extension.compare ( extensions[i] ) == 0 )
+		{
+			return false;
+		}
 	}
 
 	return true;
-}
+}//--- Fin de estContenuIndispensable
