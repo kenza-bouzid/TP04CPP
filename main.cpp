@@ -75,8 +75,8 @@ static void analyseArguments ( int argc, char * argv [])
 
 	if( argc == 1 )
 	{
-		cout << "Format d'entree incorrect" << endl;
-		cout << "Pour obtenir de l'aide, utilisez la commande man ./analog_man"
+		cerr << "Format d'entree incorrect" << endl;
+		cerr << "Pour obtenir de l'aide, utilisez la commande man ./analog_man"
 			<< endl;
 		exit(-1);
 	}
