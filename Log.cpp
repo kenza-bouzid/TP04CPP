@@ -140,6 +140,7 @@ Log & Log::operator = ( const vector<string> & informations )
 	if ( deb >= laDate.end() ) return *this;
 	int valDecalage;
 	if ( ! Strtoi ( string ( deb, laDate.end() ), &valDecalage ) ) return *this;
+	valDecalage = - valDecalage;
 	Date decalage( valDecalage / 100, valDecalage % 100 );
 	date += decalage;
 
