@@ -91,7 +91,7 @@ public:
     // Contrat :
     //
 
-    virtual ~GestionLog ();
+    ~GestionLog ();
     // Mode d'emploi :
     //  Destructeur de la classe GestionLog
     // Contrat :

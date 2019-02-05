@@ -68,7 +68,7 @@ public:
     // Contrat :
     //  Aucun contrat
 
-    virtual ~KeyLog ( );
+    ~KeyLog ( );
     // Constructeur inline : définition du destructeur dans l'interface à la fin
     // de la définition de la classe
     // Mode d'emploi :

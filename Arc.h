@@ -50,7 +50,7 @@ public:
     // Contrat :
     //
 
-    void Afficher(const string s = "")const; 
+    void Afficher(const string s = "")const;
 
 //-------------------------------------------- Constructeurs - destructeur
     Arc ( const Arc & unArc );
@@ -65,7 +65,7 @@ public:
     // Contrat :
     //
 
-    virtual ~Arc ( );
+    ~Arc ( );
     // Mode d'emploi :
     //
     // Contrat :
