@@ -230,7 +230,8 @@ int main ( int argc, char * argv [] )
 	//		Si l'option n'est pas demande, le fichier ne s'ouvre pas,
 	//		car il y a erreur
 	ofstream out;
-	out.open(nomFichierGraphe, ios_base::out & ~ios_base::trunc);
+	out.open(nomFichierGraphe, ios_base::out | ios_base::ate);
+
 	if ( optionCreationGraphe )
 	{
 		if ( ! out )
@@ -240,11 +241,31 @@ int main ( int argc, char * argv [] )
 			exit(-1);
 		}
 
-		if ( ! out.eof() )
+		// On regarde si le fichier est vide
+		out.seekp(ios_base::end);
+		if ( out.tellp() > 0 )
 		{
-			cerr << "Attention, le fichier contient des donnees !" << endl;
-			cerr << "Les donnees seront supprimees !" << endl;
+			cout << "Attention, le fichier contient des donnees !" << endl;
+			cout << "Voulez-vous ecraser ces donnees ? (y/n)" << endl;
+
+			char rep;
+			while( !(cin>>rep) || (rep != 'y' && rep != 'n'))
+			{
+				cin.ignore(1000, '\n');
+				cin.clear();
+				cout << "Entrez y ou n !" << endl;
+			}
+
 			out.close();
+			if(rep == 'y')
+			{
+				cout << "Les donnees seront supprimees !" << endl;
+			}
+			else if(rep == 'n')
+			{
+				exit(0);
+			}
+
 			out.open(nomFichierGraphe, ios_base::in | ios_base::trunc);
 		}
 	}
