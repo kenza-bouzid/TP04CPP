@@ -151,17 +151,18 @@ static void analyseArguments ( int argc, char * argv [])
 					}
 					else
 					{
-						int h = Log::Strtoui(string(stringHeure.begin(), separateur));
-						int m = Log::Strtoui(string(++separateur, stringHeure.end()));
-						// On verifie que stoi ai bien donne les bonnes valeurs
-						if( heure.heure == h || heure.minutes == m)
+						int h, m;
+						bool estH = Log::Strtoi(string(stringHeure.begin(), separateur), &h);
+						bool estM = Log::Strtoi(string(++separateur, stringHeure.end()), &m);
+
+						// On verifie la valeur de l'heure
+						if( !estH || !estM || h < 0 || m < 0 || m > 59 || h > 23)
 						{
 							cerr << "Heure incorrecte !" << endl;
 							exit(-1);
 						}
 
 						heure = Date(h, m);
-						cout << heure << endl;
 						heureValide = true;
 					}
 

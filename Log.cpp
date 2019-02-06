@@ -34,7 +34,7 @@ bool Log::Strtoi ( const string & chaine, int * res )
 	*res = 0;
 	bool estNeg = false;	// Si le nombre est negatif
 
-	if(chaine.size() == 0)
+	if( chaine.size() == 0 )
 	{
 		return false;
 	}
@@ -42,19 +42,25 @@ bool Log::Strtoi ( const string & chaine, int * res )
 	string::const_iterator deb = chaine.cbegin();
 	string::const_iterator fin = chaine.cend();
 
+	if( *deb == '\0' )
+	// Chaine vide
+	{
+		return false;
+	}
+
 	//Signe en debut de chaine
-	if(*deb == '+')
+	if( *deb == '+' )
 	{
 		++deb;
 	}
-	else if(*deb == '-')
+	else if ( *deb == '-' )
 	{
 		estNeg = true;
 		++deb;
 	}
 
 	// Lecture du nombre
-	while ( deb != fin && *deb != '\0')
+	while ( deb != fin && *deb != '\0' )
 	{
 		if ( *deb >= 48 && *deb <= 57)
 		{
@@ -82,7 +88,13 @@ int Log::Strtoui ( const string & chaine )
 	string::const_iterator deb = chaine.cbegin();
 	string::const_iterator fin = chaine.cend();
 
-	while ( deb != fin && *deb != '\0')
+	if( *deb == '\0' )
+	// Chaine vide
+	{
+		return -1;
+	}
+
+	while ( deb != fin && *deb != '\0' )
 	{
 		if ( *deb >= 48 && *deb <= 57)
 		{
