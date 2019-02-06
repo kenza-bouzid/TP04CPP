@@ -18,6 +18,7 @@ using namespace std;
 #include "Log.h"
 //------------------------------------------------------------------ CONSTANTES
 const string baseUrl = "http://intranet-if.insa-lyon.fr";
+const int tailleBaseUrl = baseUrl.size();
 // URL de base a retirer au besoin.
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
@@ -155,12 +156,12 @@ Log & Log::operator = ( const vector<string> & informations )
 	//--- Recuperation du referer
 	// Base de l'url
 	unsigned int posBaseURL = leReferer.find ( baseUrl );
-	// On essaie de trouver la base dans la string
+	// On essaie de trouver "intranet-if..." dans la string
 
-	// referer sans nom de domaine
 	if( posBaseURL < leReferer.size() )
 	{
-		referer = string ( leReferer.begin() + posBaseURL, leReferer.end() );
+		// On racourcit la string
+		referer = string ( leReferer.begin() + tailleBaseUrl, leReferer.end() );
 	}
 	else
 	{
@@ -172,7 +173,6 @@ Log & Log::operator = ( const vector<string> & informations )
 	deb = ++find ( referer.begin(), referer.end(), '.');
 	string extension1 ("");	// Pour gerer le cas pas d'extension de fichier
 	if ( deb < referer.end() )
-
 	{
 		extension1 = string ( deb, referer.end() );
 	}

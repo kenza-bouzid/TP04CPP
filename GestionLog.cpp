@@ -74,7 +74,7 @@ GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Dat
     }
   if (bitT)
     {
-      cout << "Warning : only hits between " << (string)d <<" and " << (string)(d+1) << " have been taken  into account" << endl;
+      cout << "Warning : only hits between " << (string)d << " and " << (string)(d+1) << " have been taken into account" << endl;
     }
   if (bitG)
     {

@@ -125,6 +125,7 @@ vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 	while ( entree -> good() )
 	{
 		informationsLog = decoupageInformationsLog ();
+
 		if ( informationsLog.size() == 9 )
 		{
 			R log(informationsLog);
@@ -132,7 +133,7 @@ vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 			{
 				continue;
 			}
-			if (bitT && (log.date<d||log.date>=(d+1)))
+			if (bitT && (log.date < d || log.date >= (d+1) ))
 			{
 				continue;
 			}
@@ -142,9 +143,10 @@ vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 #endif
 			tableLogs.emplace_back(log.GetKey());
 		}
-		else	// Mauvaise lecture, donc on annule tout
+		else if( !informationsLog.empty() )	//On empeche le plantage en cas de ligne vide
+		// Mauvaise lecture, donc on annule tout
 		{
-			cerr << "Le fichier de logs n'a pas le bon format ! Operaton annulee" << endl;
+			cerr << "Le fichier de logs n'a pas le bon format ! Operation annulee" << endl;
 			return vector<T>();
 		}
 	}

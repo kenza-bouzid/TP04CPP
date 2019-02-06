@@ -44,6 +44,7 @@ static bool optionCreationGraphe;	// Si l'option graphe est activee
 
 static Date heure(-1, -1);	// Heure pour le creneau horaire specifie
 static bool optionHeure;	// Si l'option de creneau horaire est activee
+static bool heureValide = false;
 
 static bool optionGarderIndispensable; //Si il faut garder que les contenus
 					// indispensables (hors image, css, javascript...)
@@ -81,7 +82,7 @@ static void analyseArguments ( int argc, char * argv [])
 		exit(-1);
 	}
 
-	for (int i = 1; i < argc; i++ )
+	for (int i = 1; i < argc - 1; i++ )
 	{
 		if( *argv[i] == '-' && strlen(argv[i]) == 2)
 		// Debut d'une option
@@ -126,14 +127,6 @@ static void analyseArguments ( int argc, char * argv [])
 			string graphe;
 			switch ( optionEnCours )
 			{
-				case RIEN:
-					if(! nomFichierLog.empty())	//Deja un nom de fichier
-					{
-						erreurOption();
-					}
-
-					nomFichierLog = argv[i];
-					break;
 				case G:
 					if(! nomFichierGraphe.empty())	//Deja un nom de fichier
 					{
@@ -143,11 +136,13 @@ static void analyseArguments ( int argc, char * argv [])
 					nomFichierGraphe = argv[i];
 					optionEnCours = RIEN;
 					break;
+				case RIEN:
+					erreurOption();
+					break;
 				case T:
 					// Decoupage de l'heure
 					string stringHeure ( argv[i] );
-					string::iterator separateur =
-						find(stringHeure.begin(), stringHeure.end(), ':');
+					string::iterator separateur = find(stringHeure.begin(), stringHeure.end(), ':');
 
 					if(separateur >= stringHeure.end())
 					{
@@ -156,24 +151,27 @@ static void analyseArguments ( int argc, char * argv [])
 					}
 					else
 					{
-						heure = Date(
-							Log::Strtoui(string(stringHeure.begin(), separateur - 1)),
-							Log::Strtoui(string(++separateur, stringHeure.end()))
-							);
-
+						int h = Log::Strtoui(string(stringHeure.begin(), separateur));
+						int m = Log::Strtoui(string(++separateur, stringHeure.end()));
 						// On verifie que stoi ai bien donne les bonnes valeurs
-						if( heure.heure == -1 || heure.minutes == -1)
+						if( heure.heure == h || heure.minutes == m)
 						{
 							cerr << "Heure incorrecte !" << endl;
 							exit(-1);
 						}
+
+						heure = Date(h, m);
+						cout << heure << endl;
+						heureValide = true;
 					}
 
 					optionEnCours = RIEN;
 					break;
+
 			}
 		}
 	}
+	nomFichierLog = argv[argc - 1];
 
 #ifdef MAP
 	cout << "Description des entrees du main" << endl;
@@ -193,7 +191,7 @@ static void analyseArguments ( int argc, char * argv [])
 		cerr << "Pas de fichier ou creer le graphe !" << endl;
 		exit(-1);
 	}
-	else if (optionHeure && heure.heure == -1)
+	else if (optionHeure && !heureValide)
 	{
 		cerr << "Pas de creneau horaire renseigne !" << endl;
 		exit(-1);
@@ -230,7 +228,7 @@ int main ( int argc, char * argv [] )
 	//		Si l'option n'est pas demande, le fichier ne s'ouvre pas,
 	//		car il y a erreur
 	ofstream out;
-	out.open(nomFichierGraphe, ios_base::out | ios_base::ate);
+	out.open(nomFichierGraphe, ios_base::trunc);
 
 	if ( optionCreationGraphe )
 	{
@@ -239,34 +237,6 @@ int main ( int argc, char * argv [] )
 			cerr << "Impossible d'acceder au fichier pour ecrire le graphe !"
 				<< endl;
 			exit(-1);
-		}
-
-		// On regarde si le fichier est vide
-		out.seekp(ios_base::end);
-		if ( out.tellp() > 0 )
-		{
-			cout << "Attention, le fichier contient des donnees !" << endl;
-			cout << "Voulez-vous ecraser ces donnees ? (y/n)" << endl;
-
-			char rep;
-			while( !(cin>>rep) || (rep != 'y' && rep != 'n'))
-			{
-				cin.ignore(1000, '\n');
-				cin.clear();
-				cout << "Entrez y ou n !" << endl;
-			}
-
-			out.close();
-			if(rep == 'y')
-			{
-				cout << "Les donnees seront supprimees !" << endl;
-			}
-			else if(rep == 'n')
-			{
-				exit(0);
-			}
-
-			out.open(nomFichierGraphe, ios_base::in | ios_base::trunc);
 		}
 	}
 	GestionLog g(&in,&out,vecteurOption, heure, nomFichierGraphe);
