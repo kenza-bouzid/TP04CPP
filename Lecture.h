@@ -128,7 +128,7 @@ vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 		if ( informationsLog.size() == 9 )
 		{
 			R log(informationsLog);
-			if (bitE  && log.contenuIndispensable)
+			if (bitE  && !log.contenuIndispensable)
 			{
 				continue;
 			}
