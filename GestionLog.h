@@ -8,12 +8,11 @@
   			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
-//---------- Interface de la classe <GestionLog> (fichier GestionLog.h) ----------------
+//---------- Interface de la classe <GestionLog> (fichier GestionLog.h) --------
 #if ! defined ( GESTIONLOG_H )
 #define GESTIONLOG_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <vector>
 #include <cstring>
 #include <iostream>
 #include <algorithm>
@@ -26,43 +25,42 @@
 #include "KeyLog.h"
 #include "Arc.h"
 
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-typedef enum {
-   RIEN ,   // option par défaut : aficher sur la console sous forme textuelle
-    // la liste des 10 documets les plus consultés par ordre décroissant de popularité
-   E ,     // option d'exclusion des ficj=hiers de type image , css ou js
-   T ,    // option permettant de ne prendre en compte que les hits qui sont dans
-   // le crénau horaire correspondant à l'intervalle [heure, heure+1[
-   G ,  // option graph VIZ
-   ET , //  combinaison des deux options E et T
-   EG , //  combinaison des deux options E et G
-   TG , //  combinaison des deux options G et G
-   ETG, //  combinaison de toutes les options
- } OptionGestionLog;
-
-
 //------------------------------------------------------------------------
 
 // Rôle de la classe <GestionLog>
-//  Implémente les différentes options que proposent l'outil d'analyse des
-//  fichiers de log Apache en utilisant une structure de données la plus
-//  optimale possible.
+//  Implémente un gestionnaire de log exploitant les données extraites d'un
+//  fichier de log à travers l'outil d'analyse des fichiers de log Apache
+//   en utilisant une structure de données la plus optimale possible.
 //
 //------------------------------------------------------------------------
 
 class GestionLog
 {
 //----------------------------------------------------------------- PUBLIC
-
 public:
 //----------------------------------------------------- Méthodes publiques
     void GenererGraphe ( ostream * out ) const ;
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
+    // Mode d'emploi : permet de générer un graphe à partir de la table
+    // de hashage de l'objet courant conformément aux conventions de GraphViz
+    // out: le fichier de sortie du graphe
+    // Contrat :Aucun contrat
     //
+    void GenererMap(const vector<KeyLog> & tableLogs);
+    // Mode d'emploi : permet de générer la map qui représente notre structure
+    // de données
+    // tableLogs: un vector contenant tous les KeyLog contenus dans un fichier
+    // log Apache , peut contenir des doublons ce qui nou spermettra de calcule
+    // la cardinalité de chaque arc
+    // Contrat : Aucun contrat
+    //
+    void AfficherDixPopulaire() ;
+    // Mode d'emploi :
+    // permet d'afficher les 10 plus populaires cible d'un fichier log Apache
+    // affiche tous les logs si le fichier contient moins de 10 cibles
+    // s'arrête au dixième si ex aequo
+    // Contrat : Aucun contrat
+    //
+
 //------------------------------------------------- Surcharge d'opérateurs
     GestionLog & operator = ( const GestionLog & unGestionLog );
     // Mode d'emploi :
@@ -72,7 +70,6 @@ public:
   	// Contrat :
   	//	Aucun contrat.
 
-
 //-------------------------------------------- Constructeurs - destructeur
     GestionLog (const GestionLog & unGestionLog );
     // Mode d'emploi :
@@ -81,11 +78,18 @@ public:
   	// Contrat :
   	//	Aucun contrat.
 
-    GestionLog (istream * fichierLog, ostream * out ,int option =1 ,
-       Date date = Date () , string s = "");
-    // Mode d'emploi :
-    //
-    // Contrat :
+    GestionLog (istream * fichierLog, ostream * out ,int option,
+       Date heure, string fichierGraphe);
+    // Mode d'emploi : Constructeur de la classe GestionLog
+    // fichierlog: le fichier de lecture comprtant les logs
+    // out : fichier de sortie d'écriture du graphe Viz
+    // option : spécifie les options sélectionnées par l'utilisateur
+    // nous gérons cela à l'aide du bitMasking . Les options étant -g, -e et -t.
+    // option est interprétée en binaire : 3bits relatifs à chacune des options
+    // sous forme de GET , le bit 0 étant l'option t...
+    // heure: l'heure de sélection définie par l'utilisateur sur la console
+    // fichierGraphe : le nom du fihcier du graphe
+    // Contrat : Aucun contrat
     //
 
     ~GestionLog ();
@@ -100,25 +104,12 @@ public:
 protected:
 //----------------------------------------------------- Méthodes protégées
 
-// --- je mets la toutes les idées de fonctions que j'utiliserai
-
-    void genereMap(const vector<KeyLog> & tableLogs);
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
-
     size_t calculPopularite (string cible);
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
     //
     vector<Arc> dixPopulaire ();
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
-    void afficherDixPopulaire() ;
     // Mode d'emploi :
     // permet de calculer
     // Contrat :

@@ -26,108 +26,6 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type GestionLog::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
-
-
-//------------------------------------------------- Surcharge d'opérateurs
-/*GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
-// Algorithme :
-//
-{
-    if (this != &unGestionLog)
-    {
-       mapLog = unGestionLog.mapLog ;
-    }
-    return *this ;
-} //----- Fin de operator =*/
-
-
-//-------------------------------------------- Constructeurs - destructeur
-/*GestionLog::GestionLog ( const GestionLog & unGestionLog )
-  mapLog (unGestionLog.mapLog)
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <GestionLog>" << endl;
-#endif
-} //----- Fin de GestionLog (constructeur de copie)*/
-
-
-GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d , string s)
-// Algorithme :
-//
-{
-  Lecture <KeyLog,Log> lectureLog (fichierLog);
-  vector<KeyLog> tableLogs =  lectureLog.LectureLog(option , d);
-  bool bitG = (option>>2) & 1 ;
-  bool bitE = (option>>1) & 1 ;
-  bool bitT = option & 1 ;
-  genereMap(tableLogs);
-  if (bitE)
-    {
-      cout << "Suppression of files of type image, javascript, css" << endl;
-    }
-  if (bitT)
-    {
-      cout << "Warning : only hits between " << (string)d <<" and " << (string)(d+1) << " have been taken  into account" << endl;
-    }
-  if (bitG)
-    {
-      cout << "Dot-file " << s << " generated" << endl;
-      GenererGraphe(out);
-    }
-    afficherDixPopulaire();
-#ifdef MAP
-    cout << "Appel au constructeur de <GestionLog>" << endl;
-#endif
-} //----- Fin de GestionLog*/
-
-
-GestionLog::~GestionLog ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <GestionLog>" << endl;
-#endif
-} //----- Fin de ~GestionLog*/
-
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
-
-
-void GestionLog::genereMap (const vector<KeyLog> & tableLogs)
-{
-    unordered_map <KeyLog,unsigned int> mapTemp;
-    for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
-    {
-      mapTemp[*it]++;
-    }
-    for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
-    {
-      mapLog.emplace (make_pair(it->first.cible,Arc(it->first.referer,it->second)));
-    }
-}
-
-
-size_t GestionLog::calculPopularite (string cible)
-{
-  auto range = mapLog.equal_range(cible);
-  size_t count = 0 ;
-  for (auto it = range.first; it != range.second ; ++it )
-  {
-    count+=it->second.cardinalite;
-  }
-  return count;
-}
-
 
 void GestionLog::GenererGraphe ( ostream * out ) const
 {
@@ -166,13 +64,15 @@ void GestionLog::GenererGraphe ( ostream * out ) const
     }
 
     // Ecriture
-    ecriture = ecriture + "node" + to_string(sommetB) + " -> node" + to_string(sommetA) + " [label=\"" + to_string(i->second.cardinalite) + "\"];\n";
+    ecriture = ecriture + "node" + to_string(sommetB) + " -> node" +
+    to_string(sommetA) + " [label=\"" + to_string(i->second.cardinalite) + "\"];\n";
   }
 
   // --- Ecriture de tous les sommets
   for ( auto i = sommets.begin(); i != sommets.end(); ++i )
   {
-    ecriture = "node" + to_string(i->second) + " [label=\"" + i->first + "\"];\n" + ecriture;
+    ecriture = "node" + to_string(i->second) + " [label=\"" + i->first
+     + "\"];\n" + ecriture;
   }
 
   // --- Ecriture finale
@@ -180,6 +80,108 @@ void GestionLog::GenererGraphe ( ostream * out ) const
   {
     *out << "digraph {\n" << ecriture << "}";
   }
+} //----- Fin de GenererGraphe
+
+void GestionLog::GenererMap (const vector<KeyLog> & tableLogs)
+{
+    unordered_map <KeyLog,unsigned int> mapTemp;
+    for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
+    {
+      mapTemp[*it]++;
+    }
+    for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
+    {
+      mapLog.emplace (make_pair(it->first.cible,Arc(it->first.referer,it->second)));
+    }
+} //----- Fin de GenererMap
+
+void GestionLog::AfficherDixPopulaire()
+{
+  vector<Arc> listeArc = dixPopulaire();
+  for (auto it = listeArc.begin(); it != (listeArc.begin()+10 ) && it != listeArc.end(); ++it)
+  {
+    it->Afficher();
+  }
+} //----- Fin de AfficherDixPopulaire
+
+//------------------------------------------------- Surcharge d'opérateurs
+GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
+// Algorithme :
+//
+{
+    if (this != &unGestionLog)
+    {
+       mapLog = unGestionLog.mapLog ;
+    }
+    return *this ;
+} //----- Fin de operator =
+
+
+//-------------------------------------------- Constructeurs - destructeur
+GestionLog::GestionLog ( const GestionLog & unGestionLog ) :
+  mapLog (unGestionLog.mapLog)
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de copie de <GestionLog>" << endl;
+#endif
+} //----- Fin de GestionLog (constructeur de copie)
+
+
+GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,
+  Date heure , string fichierGraphe)
+// Algorithme :
+//
+{
+  Lecture <KeyLog,Log> lectureLog (fichierLog);
+  vector<KeyLog> tableLogs =  lectureLog.LectureLog(option , heure);
+  bool bitG = (option>>2) & 1 ;
+  bool bitE = (option>>1) & 1 ;
+  bool bitT = option & 1 ;
+  GenererMap(tableLogs);
+  if (bitE)
+    {
+      cout << "Suppression of files of type image, javascript, css" << endl;
+    }
+  if (bitT)
+    {
+      cout << "Warning : only hits between " << (string)heure<<" and " ;
+      cout << (string)(heure+1) << " have been taken  into account" << endl;
+    }
+  if (bitG)
+    {
+      cout << "Dot-file " << fichierGraphe << " generated" << endl;
+      GenererGraphe(out);
+    }
+    AfficherDixPopulaire();
+#ifdef MAP
+    cout << "Appel au constructeur de <GestionLog>" << endl;
+#endif
+} //----- Fin de GestionLog
+
+
+GestionLog::~GestionLog ( )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au destructeur de <GestionLog>" << endl;
+#endif
+} //----- Fin de ~GestionLog
+
+
+//----------------------------------------------------- Méthodes protégées
+
+size_t GestionLog::calculPopularite (string cible)
+{
+  auto range = mapLog.equal_range(cible);
+  size_t count = 0 ;
+  for (auto it = range.first; it != range.second ; ++it )
+  {
+    count+=it->second.cardinalite;
+  }
+  return count;
 }
 
 vector<Arc> GestionLog::dixPopulaire ()
@@ -199,14 +201,4 @@ vector<Arc> GestionLog::dixPopulaire ()
   }
   sort(listeArc.begin() , listeArc.end()) ;
   return listeArc ;
-}
-
-
-void GestionLog::afficherDixPopulaire()
-{
-  vector<Arc> listeArc = dixPopulaire();
-  for (auto it = listeArc.begin(); it != (listeArc.begin()+10 ) &&  it != listeArc.end(); ++it)
-  {
-    it->Afficher();
-  }
 }
