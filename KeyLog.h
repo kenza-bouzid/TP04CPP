@@ -16,7 +16,6 @@
 #include <functional>
 #include <string>
 
-
 using namespace std ;
 //------------------------------------------------------------- Constantes
 
@@ -25,12 +24,13 @@ using namespace std ;
 //------------------------------------------------------------------------
 // Rôle de la classe <KeyLog>
 // Cette classe a deux rôles :
-// 1- Elle implémente la clé de la table de hachage utilisée pour stocker les logs.
+// 1- Elle implémente la clé de la table de hachage temporaire utilisée pour
+//  stocker les infos qui sont utiles aux fonctionnalités de notre application.
+//  Elle sert également de structure de transport de ces infos à partir de
+//  du fichier de lecture.
 //  Chaque clé sera composée d'une cible et d'un referer.
-//  Toutes les fonctions de la classe seront définies en inline afin d'éviter
-//  les surcoûts liés aux appel de fonctions.
-// 2- Elle implémente la structure de hachage utilisée
-//
+// 2- Elle implémente la spécialisation de la classe générique Hash de la stl
+//  pour le type KeyLog
 //------------------------------------------------------------------------
 
 struct KeyLog
@@ -40,20 +40,15 @@ struct KeyLog
 public:
 
 //------------------------------------------------- Surcharge d'opérateurs
-    friend bool operator == ( const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 );
-    // Méthode inline : définition de la méthode dans l'interface à la fin de
-    // de la définition de la classe
-    // Mode d'emploi :
-    //  Surcharge de l'opérateur ==
+    friend bool operator == ( const KeyLog & unKeyLog1, const KeyLog & unKeyLog2);
+    // Mode d'emploi : Surcharge de l'opérateur ==
+    // Cette surcharge est obligatoire car comparaison des clés par la table de
+    // hashage
     // Contrat :
     // Aucun contrat
 
-
 //-------------------------------------------- Constructeurs - destructeur
-
     KeyLog ( const string & uneCible, const string & unReferer);
-    // Constructeur inline : définition du constructeur dans l'interface à la fin
-    // de la définition de la classe KeyLog
     // Mode d'emploi : Constructeur de la classe Key
     //  uneCible : la cible de la clé
     // unReferer : le referer de la clé
@@ -61,25 +56,20 @@ public:
     //  Aucun contrat
 
     KeyLog ( const KeyLog & unKeyLog );
-    // Constructeur  par copie inline : définition du constructeur dans
-    // l'interface à la fin de la définition de la classe KeyLog
-    // Mode d'emploi : Constructeur de coie la classe Key
+    // Mode d'emploi : Constructeur de copie la classe Key
     //  unKeyLog : le keyLog à copier
     // Contrat :
     //  Aucun contrat
 
     ~KeyLog ( );
-    // Constructeur inline : définition du destructeur dans l'interface à la fin
-    // de la définition de la classe
     // Mode d'emploi :
-    //  destructeur de la classe KeyLog
+    // destructeur de la classe KeyLog
     // Contrat :
     //  Aucun contrat
 
     //----------------------------------------------------- Attributs publiques
       string cible;
       string referer;
-
 };
 
 //-------------------------------- Autres définitions dépendantes de <KeyLog>
@@ -95,4 +85,5 @@ public:
     }
 };
 }
+// spécialisation de classe Hash pour les types KeyLog 
 #endif // KEYLOG_H

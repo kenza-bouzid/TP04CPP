@@ -10,21 +10,12 @@
 //---------- Réalisation de la classe <KeyLog> (fichier KeyLog.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
-#include "KeyLog.h"
 //-------------------------------------------------------- Include système
-#include <iostream>
 using namespace std;
+#include <iostream>
 #include <cstring>
-
 //------------------------------------------------------ Include personnel
-
-
-//------------------------------------------------------------- Constantes
-
-//----------------------------------------------------------------- PUBLIC
-
-//----------------------------------------------------- Méthodes publiques
-
+#include "KeyLog.h"
 
 //------------------------------------------------- Surcharge d'opérateurs
 bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
@@ -32,11 +23,10 @@ bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
 {
   return ( (unKeyLog1.cible == unKeyLog2.cible)
             && (unKeyLog1.referer == unKeyLog2.referer)) ;
-}
+}// Fin de operator ==
 
-
-
-KeyLog::KeyLog( const string & uneCible, const string & unReferer) : 
+ //-------------------------------------------- Constructeurs - destructeur
+KeyLog::KeyLog( const string & uneCible, const string & unReferer) :
   cible(uneCible) , referer (unReferer)
 {
 	#ifdef MAP
@@ -53,14 +43,9 @@ KeyLog::KeyLog ( const KeyLog & unKeyLog ) : cible (unKeyLog.cible) ,
   #endif
 } //----- Fin de KeyLog (constructeur de copie)
 
-
 KeyLog::~KeyLog ( )
 {
   #ifdef MAP
       cout << "Appel au destructeur de <KeyLog>" << endl;
   #endif
 } //----- Fin de ~KeyLog
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
