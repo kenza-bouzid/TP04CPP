@@ -12,10 +12,11 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include <vector>
-#include <unordered_map>
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include "Date.h"
+#include "Log.h"
 
 using namespace std;
 //------------------------------------------------------------------ Constantes
@@ -32,14 +33,14 @@ using namespace std;
 //	La gestion du flux d'entree (ouverture, fermeture) est a la gestion de
 //		l'appelant !!
 //-----------------------------------------------------------------------------
-template < typename R , typename T >
+template <typename T , typename R >
 class Lecture
 {
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
-	unordered_multimap <R,T>  LectureLog ();
+	vector <T>  LectureLog (int option  , Date d);
 	// Mode d'emploi :
 	//	Lit tous les Logs contenus dans le flux d'entree. Si une erreur est
 	//		rencontree, annule toute la lecture et renvoie un vector vide.
@@ -107,11 +108,13 @@ protected :
 //////////////////////////////////////////////////////////////////////// PUBLIC
 //------------------------------------------------------- Methodes publiques --
 
-template < typename R , typename T >
-unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
+template <typename T , typename R >
+vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 {
-	unordered_multimap <R,T> tableLogs;
-	vector < string > informationsLog;
+	vector <T> tableLogs;
+	vector <string> informationsLog;
+	bool bitE = (option>>1) & 1 ;
+	bool bitT = option & 1 ;
 
 	if ( entree == nullptr )
 		// Cas ou l'entree n'a pas ete renseignee comme il faut.
@@ -124,16 +127,25 @@ unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 		informationsLog = decoupageInformationsLog ();
 		if ( informationsLog.size() == 9 )
 		{
-			T log(informationsLog);
+			R log(informationsLog);
+			if (bitE  && log.contenuIndispensable)
+			{
+				continue;
+			}
+			if (bitT && (log.date<d||log.date>=(d+1)))
+			{
+				continue;
+			}
+
 #ifdef MAP
 			cout << log << endl;
 #endif
-			tableLogs.insert(make_pair(log.GetKey(), log));
+			tableLogs.emplace_back(log.GetKey());
 		}
 		else	// Mauvaise lecture, donc on annule tout
 		{
 			cerr << "Le fichier de logs n'a pas le bon format ! Operaton annulee" << endl;
-			return unordered_multimap<R,T>();
+			return vector<T>();
 		}
 	}
 
@@ -143,8 +155,8 @@ unordered_multimap <R,T> Lecture<R,T>::LectureLog ()
 
 //--------------------------------------------------- Surcharge d'operateurs --
 //---------------------------------------------- Constructeurs - Destructeur --
-template < typename R,typename T >
-Lecture<R,T>::Lecture ( istream * lEntree ) : entree ( lEntree )
+template <typename T , typename R >
+Lecture<T,R>::Lecture ( istream * lEntree ) : entree ( lEntree )
 {
 #ifdef MAP
 	cout << "Construction Lecture" << endl;
@@ -152,8 +164,8 @@ Lecture<R,T>::Lecture ( istream * lEntree ) : entree ( lEntree )
 }//--- Fin de Lecture
 
 
-template < typename R,typename T >
-Lecture<R,T>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
+template < typename T , typename R >
+Lecture<T,R>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 {
 #ifdef MAP
 	cout << "Construction Lecture par copie" << endl;
@@ -161,8 +173,8 @@ Lecture<R,T>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 }//--- Fin de Lecture
 
 
-template < typename R,typename T >
-Lecture<R,T>::~Lecture ()
+template < typename T , typename R >
+Lecture<T,R>::~Lecture ()
 {
 #ifdef MAP
 	cout << "Destruction Lecture" << endl;
@@ -172,8 +184,8 @@ Lecture<R,T>::~Lecture ()
 
 ///////////////////////////////////////////////////////////////////////// PRIVE
 //------------------------------------------------------- Methodes protegees --
-template < typename R,typename T >
-vector<string> Lecture<R,T>::decoupageInformationsLog ()
+template < typename T , typename R >
+vector<string> Lecture<T,R>::decoupageInformationsLog ()
 {
 	string informations;
 	getline(*entree, informations, '\n');

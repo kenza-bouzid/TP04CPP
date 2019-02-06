@@ -58,16 +58,33 @@ using namespace std;
 } //----- Fin de GestionLog (constructeur de copie)*/
 
 
-GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d , string s )
+GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,  Date d , string s)
 // Algorithme :
 //
 {
-  gestionOption (fichierLog ,  out ,option , d ,s );
+  Lecture <KeyLog,Log> lectureLog (fichierLog);
+  vector<KeyLog> tableLogs =  lectureLog.LectureLog(option , d);
+  bool bitG = (option>>2) & 1 ;
+  bool bitE = (option>>1) & 1 ;
+  bool bitT = option & 1 ;
+  genereMap(tableLogs);
+  if (bitE)
+    {
+      cout << "Suppression of files of type image, javascript, css" << endl;
+    }
+  if (bitT)
+    {
+      cout << "Warning : only hits between " << (string)d <<" and " << (string)(d+1) << " have been taken  into account" << endl;
+    }
+  if (bitG)
+    {
+      cout << "Dot-file " << s << " generated" << endl;
+      GenererGraphe(out);
+    }
+    afficherDixPopulaire();
 #ifdef MAP
     cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
-
-
 } //----- Fin de GestionLog*/
 
 
@@ -86,12 +103,12 @@ GestionLog::~GestionLog ( )
 //----------------------------------------------------- Méthodes protégées
 
 
-void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
+void GestionLog::genereMap (const vector<KeyLog> & tableLogs)
 {
     unordered_map <KeyLog,unsigned int> mapTemp;
     for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
     {
-      mapTemp[it->first]++;
+      mapTemp[*it]++;
     }
     for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
     {
@@ -99,36 +116,6 @@ void GestionLog::genereMap (const unordered_multimap <KeyLog,Log> & tableLogs)
     }
 }
 
-void GestionLog::selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs , Date date)
-{
-  for (auto it = tableLogs.begin(); it != tableLogs.end(); )
-  {
-    if (it->second.date < date || it->second.date >= (date + 1))
-    {
-      tableLogs.erase(it++);
-    }
-    else
-    {
-      ++it;
-    }
-  }
-}
-
-void GestionLog::selectionParExtension (unordered_multimap <KeyLog,Log> & tableLogs)
-{
-  unordered_multimap <KeyLog,Log>::iterator it ;
-  for (it = tableLogs.begin(); it != tableLogs.end();)
-  {
-    if ( ! it->second.contenuIndispensable)
-      {
-        tableLogs.erase(it++);
-      }
-      else
-      {
-        ++it;
-      }
-  }
-}
 
 size_t GestionLog::calculPopularite (string cible)
 {
@@ -222,32 +209,4 @@ void GestionLog::afficherDixPopulaire()
   {
     it->Afficher();
   }
-}
-
-
-void GestionLog::gestionOption (istream * fichierLog , ostream * out ,int option  , Date d , string s )
-{
-    Lecture <KeyLog , Log> lectureLog (fichierLog);
-    unordered_multimap <KeyLog,Log> tableLogs =  lectureLog.LectureLog();
-    bool bitG = (option>>2) & 1 ;
-    bool bitE = (option>>1) & 1 ;
-    bool bitT = option & 1 ;
-    if (bitE)
-      {
-        cout << "Suppression des fichiers image, javascript, css" << endl;
-        selectionParExtension (tableLogs) ;
-      }
-    if (bitT)
-      {
-        cout << "Warning : only hits between " << (string)d <<" and " << (string)(d+1) << " have been taken  into account" << endl;
-        selectionParHeure (tableLogs,d);
-      }
-    genereMap (tableLogs);
-    if (bitG)
-      {
-        cout << "Dot-file " << s << " generated" << endl;
-        GenererGraphe(out);
-      }
-      afficherDixPopulaire();
-
 }

@@ -63,8 +63,6 @@ public:
     // permet de calculer
     // Contrat :
     //
-
-
 //------------------------------------------------- Surcharge d'opérateurs
     GestionLog & operator = ( const GestionLog & unGestionLog );
     // Mode d'emploi :
@@ -82,7 +80,6 @@ public:
   	//	unGestionLog : le gestionnaire log a copier
   	// Contrat :
   	//	Aucun contrat.
-
 
     GestionLog (istream * fichierLog, ostream * out ,int option =1 ,
        Date date = Date () , string s = "");
@@ -105,19 +102,7 @@ protected:
 
 // --- je mets la toutes les idées de fonctions que j'utiliserai
 
-    void genereMap(const unordered_multimap <KeyLog,Log> & tableLogs);
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
-
-    void selectionParHeure ( unordered_multimap <KeyLog,Log> & tableLogs , Date heure ) ;
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
-
-    void selectionParExtension (unordered_multimap <KeyLog,Log> & tableLogs) ;
+    void genereMap(const vector<KeyLog> & tableLogs);
     // Mode d'emploi :
     // permet de calculer
     // Contrat :
@@ -139,12 +124,6 @@ protected:
     // Contrat :
     //
 
-    void gestionOption (istream * fichierLog , ostream * out ,int option =1 , Date d=Date () , string s = ""  );
-    // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
-    //
-
 //    multimap <int,string>
 
 //----------------------------------------------------- Attributs protégés
@@ -156,9 +135,6 @@ protected:
     // la clé de la map est de type string correspondant aux cibles
     // la valeur est à son tour une unordered_map de clé refer
     // et de valeur: la cardinalité de chaque arc
-
-
-
 };
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 

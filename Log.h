@@ -31,6 +31,7 @@ using namespace std;
 class Log
 {
 	friend class GestionLog;
+	friend class Lecture<KeyLog,Log> ;
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
