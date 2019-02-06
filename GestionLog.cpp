@@ -82,14 +82,9 @@ void GestionLog::GenererGraphe ( ostream * out ) const
   }
 } //----- Fin de GenererGraphe
 
-void GestionLog::GenererMap (const vector<KeyLog> & tableLogs)
+void GestionLog::GenererMap (const unordered_map <KeyLog , unsigned int> & tableLogs)
 {
-    unordered_map <KeyLog,unsigned int> mapTemp;
-    for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it)
-    {
-      mapTemp[*it]++;
-    }
-    for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it )
+    for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it )
     {
       mapLog.emplace (make_pair(it->first.cible,Arc(it->first.referer,it->second)));
     }
@@ -135,7 +130,7 @@ GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,
 //
 {
   Lecture <KeyLog,Log> lectureLog (fichierLog);
-  vector<KeyLog> tableLogs =  lectureLog.LectureLog(option , heure);
+  unordered_map <KeyLog,unsigned int> tableLogs = lectureLog.LectureLog(option , heure);
   bool bitG = (option>>2) & 1 ;
   bool bitE = (option>>1) & 1 ;
   bool bitT = option & 1 ;

@@ -45,10 +45,11 @@ public:
     // out: le fichier de sortie du graphe
     // Contrat :Aucun contrat
     //
-    void GenererMap(const vector<KeyLog> & tableLogs);
+    void GenererMap(const unordered_map <KeyLog , unsigned int> & tableLogs);
     // Mode d'emploi : permet de générer la map qui représente notre structure
     // de données
-    // tableLogs: un vector contenant tous les KeyLog contenus dans un fichier
+    // tableLogs: une unordered_map contenant tous les KeyLog contenus dans
+    // un fichier avec leur cardinalité 
     // log Apache , peut contenir des doublons ce qui nou spermettra de calcule
     // la cardinalité de chaque arc
     // Contrat : Aucun contrat
@@ -98,34 +99,35 @@ public:
     // Contrat :
     //
 
-
 //------------------------------------------------------------------ PRIVE
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-
     size_t calculPopularite (string cible);
     // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
+    // permet de calculer la popularité d'une cible donnée en faisant la somme
+    // des cardinalites des différents arcs dans lesquels intervient la cible
+    // cible: la cible en question
+    // Contrat : Aucun contrat
     //
     vector<Arc> dixPopulaire ();
     // Mode d'emploi :
-    // permet de calculer
-    // Contrat :
+    // permet de classer des bouts d'arcs selon leur popularité, ici il s'agit
+    // d'arc de type (cible-popularité)
+    // vector<Arc> : un vector stockant les différentes cibles avec leur popularité
+    // classées par ordre de popularité
+    // Contrat :Aucun Contrat
     //
 
-//    multimap <int,string>
 
 //----------------------------------------------------- Attributs protégés
     unordered_multimap<string,Arc> mapLog;
     // structure de données utilisée pour stocker les différentes informations
     // relatives aux logs et qui nous sont utiles pour les options -g -e -t et
     // par défaut
-    // On utilise une ordered_map afin d'optimiser les algos de recherche
+    // On utilise une unordered_map afin d'optimiser les algos de recherche
     // la clé de la map est de type string correspondant aux cibles
-    // la valeur est à son tour une unordered_map de clé refer
-    // et de valeur: la cardinalité de chaque arc
+    // la valeur est de type Arc
 };
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 

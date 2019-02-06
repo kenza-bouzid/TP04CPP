@@ -12,6 +12,7 @@
 
 ////////////////////////////////////////////////////////// Interfaces utilisees
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include <algorithm>
 #include <iostream>
@@ -40,7 +41,7 @@ class Lecture
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
-	vector <T>  LectureLog (int option  , Date d);
+	unordered_map <T , unsigned int>  LectureLog (int option  , Date d);
 	// Mode d'emploi :
 	//	Lit tous les Logs contenus dans le flux d'entree. Si une erreur est
 	//		rencontree, annule toute la lecture et renvoie un vector vide.
@@ -109,9 +110,9 @@ protected :
 //------------------------------------------------------- Methodes publiques --
 
 template <typename T , typename R >
-vector <T> Lecture<T,R>::LectureLog (int option , Date d )
+unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
 {
-	vector <T> tableLogs;
+	unordered_map<T,unsigned int> tableLogs;
 	vector <string> informationsLog;
 	bool bitE = (option>>1) & 1 ;
 	bool bitT = option & 1 ;
@@ -141,13 +142,13 @@ vector <T> Lecture<T,R>::LectureLog (int option , Date d )
 #ifdef MAP
 			cout << log << endl;
 #endif
-			tableLogs.emplace_back(log.GetKey());
+			tableLogs[log.GetKey()]++;
 		}
 		else if( !informationsLog.empty() )	//On empeche le plantage en cas de ligne vide
 		// Mauvaise lecture, donc on annule tout
 		{
 			cerr << "Le fichier de logs n'a pas le bon format ! Operation annulee" << endl;
-			return vector<T>();
+			return unordered_map <T , unsigned int>();
 		}
 	}
 
