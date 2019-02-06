@@ -14,7 +14,6 @@
 //-------------------------------------------------------- Include système
 #include <iostream>
 using namespace std;
-
 //------------------------------------------------------ Include personnel
 #include "Arc.h"
 
@@ -23,12 +22,14 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Arc::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
-
+void Arc::Afficher (const string s ) const
+{
+  if (s != "")
+  {
+    cout << s << endl ;
+  }
+  cout << referer << " (" << cardinalite << " hits)" << endl;
+} // Fin de Afficher
 
 //------------------------------------------------- Surcharge d'opérateurs
 Arc & Arc::operator = ( const Arc & unArc )
@@ -47,15 +48,6 @@ bool Arc::operator < ( const Arc & unArc )
 {
   return cardinalite > unArc.cardinalite ;
 }//----- Fin de operator <
-
-void Arc::Afficher (const string s ) const
-{
-  if (s != "")
-  {
-    cout << s << endl ;
-  }
-  cout << referer << " (" << cardinalite << " hits)" << endl;
-}
 
 //-------------------------------------------- Constructeurs - destructeur
 Arc::Arc ( const Arc & unArc )
@@ -89,8 +81,3 @@ Arc::~Arc ( )
     cout << "Appel au destructeur de <Arc>" << endl;
 #endif
 } //----- Fin de ~Arc
-
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
