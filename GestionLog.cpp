@@ -93,7 +93,7 @@ void GestionLog::GenererMap (const unordered_map <KeyLog , unsigned int> & table
 void GestionLog::AfficherDixPopulaire()
 {
   vector<Arc> listeArc = dixPopulaire();
-  for (auto it = listeArc.begin(); it != (listeArc.begin()+10 ) && it != listeArc.end(); ++it)
+  for (auto it = listeArc.begin(); it != (listeArc.begin()+10) && it != listeArc.end(); ++it)
   {
     it->Afficher();
   }

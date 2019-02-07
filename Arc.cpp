@@ -46,6 +46,10 @@ Arc & Arc::operator = ( const Arc & unArc )
 
 bool Arc::operator < ( const Arc & unArc )
 {
+  if (cardinalite == unArc.cardinalite)
+    {
+      return compare_nocase (referer, unArc.referer);
+    }
   return cardinalite > unArc.cardinalite ;
 }//----- Fin de operator <
 
@@ -81,3 +85,18 @@ Arc::~Arc ( )
     cout << "Appel au destructeur de <Arc>" << endl;
 #endif
 } //----- Fin de ~Arc
+
+//----------------------------------------------------- Méthodes protégées
+// comparison, not case sensitive.
+bool Arc::compare_nocase (string first, string second)
+{
+  unsigned int i=0;
+  while ( (i<first.length()) && (i<second.length()) )
+  {
+    if (tolower(first[i])<tolower(second[i])) return true;
+    else if (tolower(first[i])>tolower(second[i])) return false;
+    ++i;
+  }
+  if (first.length()<second.length()) return true;
+  else return false;
+}

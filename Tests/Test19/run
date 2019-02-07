@@ -1,0 +1,1 @@
+dot -Tpng -o ../Graphes/log1.png ../Dots/log1.dot
