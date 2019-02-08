@@ -16,13 +16,9 @@
 #include <iostream>
 using namespace std;
 
-#include <algorithm>    // std::for_each
 
 //------------------------------------------------------ Include personnel
 #include "GestionLog.h"
-
-//------------------------------------------------------------- Constantes
-
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques

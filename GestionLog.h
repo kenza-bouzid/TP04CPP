@@ -13,11 +13,9 @@
 #define GESTIONLOG_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <cstring>
-#include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <vector>
-#include <fstream>
 #include <unordered_map>
 #include "Date.h"
 #include "Log.h"
@@ -49,7 +47,7 @@ public:
     // Mode d'emploi : permet de générer la map qui représente notre structure
     // de données
     // tableLogs: une unordered_map contenant tous les KeyLog contenus dans
-    // un fichier avec leur cardinalité 
+    // un fichier avec leur cardinalité
     // log Apache , peut contenir des doublons ce qui nou spermettra de calcule
     // la cardinalité de chaque arc
     // Contrat : Aucun contrat

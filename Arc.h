@@ -71,12 +71,12 @@ public:
 
 //------------------------------------------------------------------ PRIVE
 protected:
-  
+
 //----------------------------------------------------- Méthodes protégées
     bool compare_nocase (string first, string second);
-    //Mode d'emploi: permet de trier les arc par ordre alphabétique de unReferer
+    //Mode d'emploi: permet de trier les arcs par ordre alphabétique de Referer
     // dans le cas d'égalité des cardinalités
-    // first: le premier referer à acomparer
+    // first: le premier referer à comparer
     // second : le deuxième
     // retourne un booléen indiquant si first > second
     // Contrat: Aucun Contrat

@@ -16,7 +16,6 @@ using namespace std;
 #include <cstring>
 //------------------------------------------------------ Include personnel
 #include "KeyLog.h"
-
 //------------------------------------------------- Surcharge d'opérateurs
 bool operator == (const KeyLog & unKeyLog1 , const KeyLog & unKeyLog2 )
   // surcharge de l'opérateur ==

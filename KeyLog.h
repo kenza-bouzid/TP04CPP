@@ -17,9 +17,6 @@
 #include <string>
 
 using namespace std ;
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <KeyLog>
@@ -85,5 +82,5 @@ public:
     }
 };
 }
-// spécialisation de classe Hash pour les types KeyLog 
+// spécialisation de classe Hash pour les types KeyLog
 #endif // KEYLOG_H

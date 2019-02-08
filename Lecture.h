@@ -20,19 +20,18 @@
 #include "Log.h"
 
 using namespace std;
-//------------------------------------------------------------------ Constantes
-//----------------------------------------------------------------------- Types
-
-
 //-----------------------------------------------------------------------------
 //	Role de la classe <Lecture>
 //	Permet de lire un fichier de Log et de creer une serie d'objet relies
-//		aux logs (objets de type T)
-//	T doit avoir un constructeur prenant en parametre un
+//		aux logs (objets de type R) en retenant que les informations
+//    utiles aux usages de l'application
+//  T doit correspondre au type regroupaant les données utiles à l'application
+//	R doit avoir un constructeur prenant en parametre un
 //		vector<string>, qui contient toutes les informations du Log.
-//	T doit avoir une methode permettant de generer une cle (GetKey)
+//	R doit avoir une methode permettant de generer une cle (GetKey)
 //	La gestion du flux d'entree (ouverture, fermeture) est a la gestion de
 //		l'appelant !!
+//
 //-----------------------------------------------------------------------------
 template <typename T , typename R >
 class Lecture
@@ -41,12 +40,14 @@ class Lecture
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
-	unordered_map <T , unsigned int>  LectureLog (int option  , Date d);
+	unordered_map <T , unsigned int>  LectureLog (int option  , Date heure);
 	// Mode d'emploi :
 	//	Lit tous les Logs contenus dans le flux d'entree. Si une erreur est
-	//		rencontree, annule toute la lecture et renvoie un vector vide.
-	//	retour : le vector contenant tous les Log, au format specifie par
-	//		l'utilisateur.
+	//		rencontree, annule toute la lecture et renvoie une map vide.
+	//  option : l'otion spécifiée par l'utilisateur
+	//  heure : l'heure qui définie le crénaux de sélection
+	//	retour : une table de hachage contenant tous les KeyLogs (clé de la map)
+	//  au format specifie par l'utilisateur et leurs cardinalités respectives
 	// Contrat :
 	//	Aucun contrat.
 
@@ -167,7 +168,6 @@ Lecture<T,R>::Lecture ( istream * lEntree ) : entree ( lEntree )
 #endif
 }//--- Fin de Lecture
 
-
 template < typename T , typename R >
 Lecture<T,R>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 {
@@ -176,7 +176,6 @@ Lecture<T,R>::Lecture ( const Lecture & lecture ) : entree ( lecture.entree )
 #endif
 }//--- Fin de Lecture
 
-
 template < typename T , typename R >
 Lecture<T,R>::~Lecture ()
 {
@@ -184,7 +183,6 @@ Lecture<T,R>::~Lecture ()
 	cout << "Destruction Lecture" << endl;
 #endif
 }//-- Fin de ~Lecture
-
 
 ///////////////////////////////////////////////////////////////////////// PRIVE
 //------------------------------------------------------- Methodes protegees --
@@ -258,7 +256,5 @@ vector<string> Lecture<T,R>::decoupageInformationsLog ()
 	if(deb >= informations.end()-1) return decoupage;		// Bonne situation
 	return decoupage;
 }//--- Fin de decoupageInformationLog
-
-
 
 #endif // ifndef LECTURE_H
