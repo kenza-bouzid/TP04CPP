@@ -148,6 +148,7 @@ unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
 		// Mauvaise lecture, donc on annule tout
 		{
 			cerr << "Le fichier de logs n'a pas le bon format ! Operation annulee" << endl;
+			exit(-1);
 			return unordered_map <T , unsigned int>();
 		}
 	}

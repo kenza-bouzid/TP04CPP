@@ -1,1 +1,1 @@
-dot -Tpng -o ../Graphes/log1.png ../Dots/log1.dot
+../../analog -g dot.dot ../Logs/log2.log
