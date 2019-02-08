@@ -13,8 +13,7 @@ logs Apache.
 .SH OPTIONS
 \fBAucune option\fR
 : lecture du fichier de Logs fourni en paramètres. Le programme
-affiche ensuite un top 10 des pages les plus visitées qui respectent les critères
-imposés.
+affiche ensuite un top 10 des pages les plus visitées.
 
 \fB-g nomfichier.dot\fR
 : le programme crée un graphe dans le format .dot qui représente
@@ -25,7 +24,7 @@ Le nombre de fois que ce chemin a été emprunté est également indiqué.
 .BR -e
 : le programme ignore tous les Logs qui font référence à un referer ou une cible qui possèdent
 une extension de type image, javascript ou css. Cette sélection impacte l'effet
-des deux options précédentes : le top 10 et le graphe généré (si demandé)
+des deux options précédentes : le top 10 et le graphe généré
 ne tiennent plus compte des fichiers de type image, javascript ou css.
 
 \fB-t heure\fR
@@ -33,7 +32,7 @@ ne tiennent plus compte des fichiers de type image, javascript ou css.
 horaire spécifiée par le paramètre "heure". Le format d'entrée a respecter est le suivant :
 \fBHH:MM\fR.
 La sélection sur l'horaire suit la règle suivante : seuls les Logs ayant été réalisés dans la tranche [ heure ; heure + 1 [ sont conservés.
-Comme pour l'option -e, cette option impacte les résultats obtenus sur le top 10 ou le graphe.
+Cette option impacte les résultats obtenus sur le top 10 ou le graphe.
 
 Toutes les options présentées peuvent être combinées ensembles. L'ordre d'entrée des options n'a pas d'importance ni d'impact sur le résultat de l'exécution du programme.
 
