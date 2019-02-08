@@ -1,1 +1,1 @@
-../../analog -k ../Logs/log1.log
+../../analog -g dot.dot ../Logs/log3.log
