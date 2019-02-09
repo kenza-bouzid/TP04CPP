@@ -16,8 +16,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-#include "Date.h"
-#include "Log.h"
+
 
 using namespace std;
 //-----------------------------------------------------------------------------
@@ -145,7 +144,14 @@ unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
 
 		if ( informationsLog.size() == 9 )
 		{
+			if( informationsLog[5].compare("200") != 0 )
+			// On ne garde que les logs qui ont aboutis : status = 200
+			{
+				continue;
+			}
+
 			R log(informationsLog);
+
 			if (bitE  && !log.contenuIndispensable)
 			{
 				continue;
