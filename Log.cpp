@@ -215,16 +215,10 @@ ostream & operator << ( ostream & out, const Log & log )
 }//--- Fin de operator <<
 
 
-bool Log::operator < (const Log& log ) const
-{
-		return cible < log.cible ;
-}//--- Fin de operator <
-
-
-bool operator == (const Log& log1 , const Log& log2 )
+/* bool operator == (const Log& log1 , const Log& log2 )
 {
 	return !strcmp(log1.cible.c_str(),log2.cible.c_str()) ;
-}// --- Fin de operator ==
+}// --- Fin de operator ==*/
 
 
 //---------------------------------------------- Constructeurs - Destructeur --

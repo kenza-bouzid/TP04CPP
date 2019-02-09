@@ -97,26 +97,6 @@ public :
 	// Contrat :
 	//	Aucun contrat.
 
-	bool operator < (const Log & log ) const;
-	// Mode d'emploi :
-	//	Permet de comparer deux logs selon leur cible (ordre alphabétique)
-	//	log : le log à comparer
-	//	retour : un booléen indiquant si le log courant est inférieur au log
-	// passé en paramètre
-	// Contrat :
-	//	Aucun contrat.
-
-	friend bool operator == (const Log & log1 , const Log & log2);
-	// Mode d'emploi :
-	//	Permet de comparer deux logs selon leur cible
-	//	log1 et log 2 : les logs à comparer
-	//	retour : un booléen indiquant si les log1 et log2 sont égaux selon leurs
-	//  cibles respectives
-	// passé en paramètre
-	// Contrat :
-	//	Aucun contrat.
-
-
 
 	//-------------------------------------- Constructeurs - Destructeur --
 	Log ( Date laDate = Date(), string laCible = "", string leReferer = "", bool leContenuIndispensable = false);

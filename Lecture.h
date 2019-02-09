@@ -39,7 +39,7 @@ class Lecture
 //////////////////////////////////////////////////////////////////////// PUBLIC
 public :
 	//----------------------------------------------- Methodes publiques --
-	unordered_map <T , unsigned int>  LectureLog (int option  , Date heure);
+	unordered_map <T , unsigned int>  LectureLog ( int option  , Date heure );
 	// Mode d'emploi :
 	//	Lit tous les Logs contenus dans le flux d'entree. Si une erreur est
 	//		rencontree, annule toute la lecture et renvoie une map vide.

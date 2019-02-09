@@ -22,7 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void Arc::Afficher (const string s ) const
+void Arc::Afficher ( const string s ) const
 {
   if (s != "")
   {
@@ -44,7 +44,7 @@ Arc & Arc::operator = ( const Arc & unArc )
   return *this ;
 } //----- Fin de operator =
 
-bool Arc::operator < ( const Arc & unArc )
+bool Arc::operator < ( const Arc & unArc ) const
 {
   if (cardinalite == unArc.cardinalite)
     {
@@ -88,7 +88,7 @@ Arc::~Arc ( )
 
 //----------------------------------------------------- Méthodes protégées
 // comparison, not case sensitive.
-bool Arc::compare_nocase (string first, string second)
+bool Arc::compare_nocase (const string & first, const string & second)
 {
   unsigned int i=0;
   while ( (i<first.length()) && (i<second.length()) )

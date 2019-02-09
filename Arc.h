@@ -28,21 +28,21 @@ public:
     Arc & operator = ( const Arc & unArc );
     // Mode d'emploi : Surcharge de l'opérateur = de la classe Arc
     // Contrat : Aucun contrat
-    //
 
-    bool operator < ( const Arc & unArc );
+
+    bool operator < ( const Arc & unArc ) const;
     // Mode d'emploi : Surcharge de l'opérateur < de la classe Arc
     // Contrat : Aucun contrat
-    //
 
-    void Afficher(const string s = "")const;
+
+    void Afficher ( const string s = "" ) const;
     // Mode d'emploi : permet d'afficher un bout d'arc.
     // Dans ce contexte, l'affichage est personnalisé pour un type d'arc
     // (cible-card)
     // s : chaine de caract permettant d'ajuter une spécification d'affichage
     // si besoin. Elle est égale à la chaine vide par défaut
     // Contrat : Aucun contrat
-    //
+
 
 //-------------------------------------------- Constructeurs - destructeur
     Arc ( const Arc & unArc );
@@ -54,33 +54,32 @@ public:
     // unArc: objet à partr du quel nous créons une nouvelle instance de Arc
     // par copie.
     // Contrat : Aucun constrat
-    //
 
-    Arc ( string unRefere = "" , unsigned int card = 0 );
+
+    Arc ( string unReferer  = "" , unsigned int card = 0 );
     // Mode d'emploi : Coonstructeur de la classe Arc
     // unReferer: le referer et éventuellement une cible
     // card : la cardinalité associé à l'arc
     // Contrat : Aucun constrat
-    //
+
 
     ~Arc ( );
-    // Mode d'emploi : Destructeur de Arc, aucune spécification car contexte
-    // statique
+    // Mode d'emploi : Destructeur de Arc
     // Contrat : Aucun constrat
-    //
+
 
 //------------------------------------------------------------------ PRIVE
 protected:
 
 //----------------------------------------------------- Méthodes protégées
-    bool compare_nocase (string first, string second);
+    static bool compare_nocase ( const string & first, const string & second );
     //Mode d'emploi: permet de trier les arcs par ordre alphabétique de Referer
     // dans le cas d'égalité des cardinalités
     // first: le premier referer à comparer
     // second : le deuxième
     // retourne un booléen indiquant si first > second
     // Contrat: Aucun Contrat
-    //
+
 
 //----------------------------------------------------- Attributs protégés
   string referer;
