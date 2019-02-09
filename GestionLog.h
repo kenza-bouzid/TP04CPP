@@ -29,7 +29,6 @@
 //  Implémente un gestionnaire de log exploitant les données extraites d'un
 //  fichier de log à travers l'outil d'analyse des fichiers de log Apache
 //   en utilisant une structure de données la plus optimale possible.
-//
 //------------------------------------------------------------------------
 
 class GestionLog
@@ -42,7 +41,8 @@ public:
     // de hashage de l'objet courant conformément aux conventions de GraphViz
     // out: le fichier de sortie du graphe
     // Contrat :Aucun contrat
-    //
+
+
     void GenererMap(const unordered_map <KeyLog , unsigned int> & tableLogs);
     // Mode d'emploi : permet de générer la map qui représente notre structure
     // de données
@@ -51,14 +51,15 @@ public:
     // log Apache , peut contenir des doublons ce qui nou spermettra de calcule
     // la cardinalité de chaque arc
     // Contrat : Aucun contrat
-    //
+
+
     void AfficherDixPopulaire() ;
     // Mode d'emploi :
     // permet d'afficher les 10 plus populaires cible d'un fichier log Apache
     // affiche tous les logs si le fichier contient moins de 10 cibles
     // s'arrête au dixième si ex aequo
     // Contrat : Aucun contrat
-    //
+
 
 //------------------------------------------------- Surcharge d'opérateurs
     GestionLog & operator = ( const GestionLog & unGestionLog );
@@ -77,6 +78,7 @@ public:
   	// Contrat :
   	//	Aucun contrat.
 
+
     GestionLog (istream * fichierLog, ostream * out ,int option,
        Date heure, string fichierGraphe);
     // Mode d'emploi : Constructeur de la classe GestionLog
@@ -87,15 +89,15 @@ public:
     // option est interprétée en binaire : 3bits relatifs à chacune des options
     // sous forme de GET , le bit 0 étant l'option t...
     // heure: l'heure de sélection définie par l'utilisateur sur la console
-    // fichierGraphe : le nom du fihcier du graphe
+    // fichierGraphe : le nom du fichier du graphe
     // Contrat : Aucun contrat
-    //
+
 
     ~GestionLog ();
     // Mode d'emploi :
     //  Destructeur de la classe GestionLog
     // Contrat :
-    //
+
 
 //------------------------------------------------------------------ PRIVE
 
@@ -107,7 +109,8 @@ protected:
     // des cardinalites des différents arcs dans lesquels intervient la cible
     // cible: la cible en question
     // Contrat : Aucun contrat
-    //
+
+
     vector<Arc> dixPopulaire ();
     // Mode d'emploi :
     // permet de classer des bouts d'arcs selon leur popularité, ici il s'agit
@@ -115,7 +118,6 @@ protected:
     // vector<Arc> : un vector stockant les différentes cibles avec leur popularité
     // classées par ordre de popularité
     // Contrat :Aucun Contrat
-    //
 
 
 //----------------------------------------------------- Attributs protégés
@@ -126,6 +128,8 @@ protected:
     // On utilise une unordered_map afin d'optimiser les algos de recherche
     // la clé de la map est de type string correspondant aux cibles
     // la valeur est de type Arc
+
+    
 };
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 

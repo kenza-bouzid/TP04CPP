@@ -99,7 +99,8 @@ public :
 
 
 	//-------------------------------------- Constructeurs - Destructeur --
-	Log ( Date laDate = Date(), string laCible = "", string leReferer = "", bool leContenuIndispensable = false);
+	Log ( Date laDate = Date(), string laCible = "", string leReferer = "",
+		bool leContenuIndispensable = false);
 	// Mode d'emploi :
 	//	Constructeur de la classe Log
 	//	laDate : la date du Log

@@ -22,7 +22,6 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-
 void GestionLog::GenererGraphe ( ostream * out ) const
 {
   string ecriture = "";
@@ -78,6 +77,7 @@ void GestionLog::GenererGraphe ( ostream * out ) const
   }
 } //----- Fin de GenererGraphe
 
+
 void GestionLog::GenererMap (const unordered_map <KeyLog , unsigned int> & tableLogs)
 {
     for (auto it = tableLogs.begin(); it != tableLogs.end(); ++it )
@@ -85,6 +85,7 @@ void GestionLog::GenererMap (const unordered_map <KeyLog , unsigned int> & table
       mapLog.emplace (make_pair(it->first.cible,Arc(it->first.referer,it->second)));
     }
 } //----- Fin de GenererMap
+
 
 void GestionLog::AfficherDixPopulaire()
 {
@@ -94,6 +95,7 @@ void GestionLog::AfficherDixPopulaire()
     it->Afficher();
   }
 } //----- Fin de AfficherDixPopulaire
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
@@ -111,8 +113,6 @@ GestionLog & GestionLog::operator = ( const GestionLog & unGestionLog )
 //-------------------------------------------- Constructeurs - destructeur
 GestionLog::GestionLog ( const GestionLog & unGestionLog ) :
   mapLog (unGestionLog.mapLog)
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <GestionLog>" << endl;
@@ -122,39 +122,42 @@ GestionLog::GestionLog ( const GestionLog & unGestionLog ) :
 
 GestionLog::GestionLog (istream * fichierLog , ostream * out , int option ,
   Date heure , string fichierGraphe)
-// Algorithme :
-//
 {
+
   Lecture <KeyLog,Log> lectureLog (fichierLog);
   unordered_map <KeyLog,unsigned int> tableLogs = lectureLog.LectureLog(option , heure);
   bool bitG = (option>>2) & 1 ;
   bool bitE = (option>>1) & 1 ;
   bool bitT = option & 1 ;
+
   GenererMap(tableLogs);
+
   if (bitE)
-    {
+  {
       cout << "Suppression of files of type image, javascript, css" << endl;
-    }
+  }
+
   if (bitT)
-    {
+  {
       cout << "Warning : only hits between " << (string)heure<<" and " ;
       cout << (string)(heure+1) << " have been taken  into account" << endl;
-    }
+  }
+
   if (bitG)
-    {
+  {
       cout << "Dot-file " << fichierGraphe << " generated" << endl;
       GenererGraphe(out);
-    }
-    AfficherDixPopulaire();
+  }
+
+  AfficherDixPopulaire();
+
 #ifdef MAP
-    cout << "Appel au constructeur de <GestionLog>" << endl;
+  cout << "Appel au constructeur de <GestionLog>" << endl;
 #endif
 } //----- Fin de GestionLog
 
 
 GestionLog::~GestionLog ( )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au destructeur de <GestionLog>" << endl;
@@ -163,7 +166,6 @@ GestionLog::~GestionLog ( )
 
 
 //----------------------------------------------------- Méthodes protégées
-
 size_t GestionLog::calculPopularite (string cible)
 {
   auto range = mapLog.equal_range(cible);
@@ -173,7 +175,8 @@ size_t GestionLog::calculPopularite (string cible)
     count+=it->second.cardinalite;
   }
   return count;
-}
+}//--- Fin de calculPopularite
+
 
 vector<Arc> GestionLog::dixPopulaire ()
 {
@@ -185,6 +188,7 @@ vector<Arc> GestionLog::dixPopulaire ()
       mapTemp[it->first]=calculPopularite(it->first);
     }
   }
+  
   vector <Arc> listeArc;
   for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it)
   {
@@ -192,4 +196,4 @@ vector<Arc> GestionLog::dixPopulaire ()
   }
   sort(listeArc.begin() , listeArc.end()) ;
   return listeArc ;
-}
+}//--- Fin de dixPopulaire

@@ -215,12 +215,6 @@ ostream & operator << ( ostream & out, const Log & log )
 }//--- Fin de operator <<
 
 
-/* bool operator == (const Log& log1 , const Log& log2 )
-{
-	return !strcmp(log1.cible.c_str(),log2.cible.c_str()) ;
-}// --- Fin de operator ==*/
-
-
 //---------------------------------------------- Constructeurs - Destructeur --
 Log::Log ( Date laDate, string laCible, string leReferer,
 	bool leContenuIndispensable ) : date(laDate), cible(laCible),

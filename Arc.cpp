@@ -87,16 +87,16 @@ Arc::~Arc ( )
 } //----- Fin de ~Arc
 
 //----------------------------------------------------- Méthodes protégées
-// comparison, not case sensitive.
 bool Arc::compare_nocase (const string & first, const string & second)
 {
   unsigned int i=0;
   while ( (i<first.length()) && (i<second.length()) )
   {
-    if (tolower(first[i])<tolower(second[i])) return true;
-    else if (tolower(first[i])>tolower(second[i])) return false;
+    if ( tolower(first[i]) < tolower(second[i] )) return true;
+    else if ( tolower(first[i]) > tolower(second[i] )) return false;
     ++i;
   }
+  
   if (first.length()<second.length()) return true;
   else return false;
 }

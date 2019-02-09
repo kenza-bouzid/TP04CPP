@@ -71,16 +71,17 @@ public:
 
 //-------------------------------- Autres définitions dépendantes de <KeyLog>
 namespace std {
-template<>
-class hash<KeyLog> {
-public:
-    size_t operator()(const KeyLog &k) const
-    {
-        size_t h1 = std::hash<std::string>()(k.cible);
-        size_t h2 = std::hash<std::string>()(k.referer);
-        return h1 ^ ( h2 << 1 );
-    }
-};
+  template<>
+  class hash<KeyLog> {
+  public:
+      size_t operator()(const KeyLog &k) const
+      {
+          size_t h1 = std::hash<std::string>()(k.cible);
+          size_t h2 = std::hash<std::string>()(k.referer);
+          return h1 ^ ( h2 << 1 );
+      }
+  };
+
 }
 // spécialisation de classe Hash pour les types KeyLog
 #endif // KEYLOG_H

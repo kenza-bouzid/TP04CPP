@@ -1,9 +1,3 @@
-/* int main()
-{
-	ifstream f("anonyme.log");
-	Lecture<Log> l(&f);
-	vector<Log> v = l.LectureLog();
-}*/
 /*************************************************************************
                            main  -  lancement du programme
 
@@ -71,7 +65,9 @@ static void analyseArguments ( int argc, char * argv [])
 //	argc : le nombre de parametres
 //	argv : tableau qui contient les parametres
 {
-	enum Option { RIEN, G, E, T };	//Pour savoir quelle option est en cours de traitement.
+	enum Option { RIEN, G, E, T };
+	//Pour savoir quelle option est en cours de traitement.
+
 	Option optionEnCours = RIEN;
 
 	if( argc == 1 )
@@ -136,13 +132,12 @@ static void analyseArguments ( int argc, char * argv [])
 					nomFichierGraphe = argv[i];
 					optionEnCours = RIEN;
 					break;
-				case RIEN:
-					erreurOption();
-					break;
 				case T:
+				{
 					// Decoupage de l'heure (differenciation HH:MM et HH)
 					string stringHeure ( argv[i] );
-					string::iterator separateur = find(stringHeure.begin(), stringHeure.end(), ':');
+					string::iterator separateur = find(stringHeure.begin(),
+						stringHeure.end(), ':');
 
 					if(separateur >= stringHeure.end())
 					{
@@ -165,7 +160,8 @@ static void analyseArguments ( int argc, char * argv [])
 						}
 						else
 						{
-							cerr << "Mauvais format d'heure : HH:MM ou HH !" << endl;
+							cerr << "Mauvais format d'heure : HH:MM ou HH !"
+								<< endl;
 							exit(-1);
 						}
 					}
@@ -173,8 +169,10 @@ static void analyseArguments ( int argc, char * argv [])
 					{
 						// --- Format HH:MM
 						int h, m;
-						bool estH = Log::Strtoi(string(stringHeure.begin(), separateur), &h);
-						bool estM = Log::Strtoi(string(++separateur, stringHeure.end()), &m);
+						bool estH = Log::Strtoi(string(stringHeure.begin(),
+							separateur), &h);
+						bool estM = Log::Strtoi(string(++separateur,
+							stringHeure.end()), &m);
 
 						// On verifie la valeur de l'heure
 						if( !estH || !estM || h < 0 || m < 0 || m > 59 || h > 23)
@@ -189,6 +187,14 @@ static void analyseArguments ( int argc, char * argv [])
 
 					optionEnCours = RIEN;
 					break;
+				}
+			case RIEN:
+				erreurOption();
+				break;
+			case E:
+				break;
+			default:
+				break;
 
 			}
 		}

@@ -166,7 +166,7 @@ unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
 #endif
 			tableLogs[log.GetKey()]++;
 		}
-		else if( !informationsLog.empty() )	//On empeche le plantage en cas de ligne vide
+		else if( !informationsLog.empty() )	//On empeche l'arret en cas de ligne vide
 		// Mauvaise lecture, donc on annule tout
 		{
 			ErreurLecture();
