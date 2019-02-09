@@ -11,7 +11,7 @@
 #define MAIN_H
 
 //------------------------------------------------------------------------
-// Rôle du module <main>
+// Role du module <main>
 //	Permet de lancer le programme de lecture des Logs. Decortique les
 //		parametres avec lesquels est lance le programme.
 //------------------------------------------------------------------------
