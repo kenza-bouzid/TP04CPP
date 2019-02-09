@@ -52,6 +52,14 @@ public :
 	//	Aucun contrat.
 
 
+	static void ErreurLecture();
+	// Mode d'emploi :
+	//	Permet d'arreter l'execution du programme si une erreur de lecture du
+	//		Log est detectee.
+	// Contrat :
+	//	Aucun contrat.
+
+
 	//------------------------------------------- Surcharge d'operateurs --
 	Lecture & operator = ( const Lecture & lecture );
 	// Mode d'emploi :
@@ -109,6 +117,13 @@ protected :
 
 //////////////////////////////////////////////////////////////////////// PUBLIC
 //------------------------------------------------------- Methodes publiques --
+template <typename T , typename R >
+void Lecture<T,R>::ErreurLecture()
+{
+	cerr << "Le fichier de logs n'a pas le bon format ! Operation annulee" << endl;
+	exit(-1);
+}//--- Fin de ErreurLecture
+
 
 template <typename T , typename R >
 unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
@@ -148,8 +163,7 @@ unordered_map <T , unsigned int> Lecture<T,R>::LectureLog (int option , Date d )
 		else if( !informationsLog.empty() )	//On empeche le plantage en cas de ligne vide
 		// Mauvaise lecture, donc on annule tout
 		{
-			cerr << "Le fichier de logs n'a pas le bon format ! Operation annulee" << endl;
-			exit(-1);
+			ErreurLecture();
 			return unordered_map <T , unsigned int>();
 		}
 	}

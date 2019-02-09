@@ -140,17 +140,38 @@ static void analyseArguments ( int argc, char * argv [])
 					erreurOption();
 					break;
 				case T:
-					// Decoupage de l'heure
+					// Decoupage de l'heure (differenciation HH:MM et HH)
 					string stringHeure ( argv[i] );
 					string::iterator separateur = find(stringHeure.begin(), stringHeure.end(), ':');
 
 					if(separateur >= stringHeure.end())
 					{
-						cerr << "Mauvais format d'heure : HH:MM" << endl;
-						exit(-1);
+						// --- Format HH
+						int h;
+						if( Log::Strtoi ( stringHeure, &h ) )
+						{
+							// On verifie la valeur de l'heure
+							if( h >= 0 && h < 24 )
+							{
+								heure = Date(h, 0);
+								heureValide = true;
+							}
+							else
+							{
+								cerr << "Heure incorrecte !" << endl;
+								exit(-1);
+							}
+
+						}
+						else
+						{
+							cerr << "Mauvais format d'heure : HH:MM ou HH !" << endl;
+							exit(-1);
+						}
 					}
 					else
 					{
+						// --- Format HH:MM
 						int h, m;
 						bool estH = Log::Strtoi(string(stringHeure.begin(), separateur), &h);
 						bool estM = Log::Strtoi(string(++separateur, stringHeure.end()), &m);

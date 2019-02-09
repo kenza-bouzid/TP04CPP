@@ -139,20 +139,21 @@ Log & Log::operator = ( const vector<string> & informations )
 	// heure
 	string::iterator deb = ++find ( laDate.begin(), laDate.end(), ':' );
 	string::iterator fin = find ( deb, laDate.end(), ':' );
-	if ( deb >= fin ) return *this;
+	if ( deb >= fin ) Lecture<Log, KeyLog>::ErreurLecture();
 	date.heure = Strtoui ( string(deb, fin) );
 
 	// minutes
 	deb = ++fin;
 	fin = find ( deb, laDate.end(), ':' );
-	if ( deb >= fin ) return *this;
+	if ( deb >= fin ) Lecture<Log, KeyLog>::ErreurLecture();
 	date.minutes = Strtoui ( string ( deb, fin ) );
 
 	// Decalage horaire
 	deb = ++find(fin, laDate.end(), ' ');
-	if ( deb >= laDate.end() ) return *this;
+	if ( deb >= laDate.end() ) Lecture<Log, KeyLog>::ErreurLecture();
 	int valDecalage;
-	if ( ! Strtoi ( string ( deb, laDate.end() ), &valDecalage ) ) return *this;
+	if ( ! Strtoi ( string ( deb, laDate.end() ), &valDecalage ) )
+		Lecture<Log, KeyLog>::ErreurLecture();
 	valDecalage = - valDecalage;
 	Date decalage( valDecalage / 100, valDecalage % 100 );
 	date += decalage;
@@ -161,7 +162,7 @@ Log & Log::operator = ( const vector<string> & informations )
 	//--- Recuperation de la cible
 	deb = ++find ( laCible.begin(), laCible.end(), ' ' );
 	fin = find ( deb, laCible.end(), ' ' );
-	if ( deb >= fin ) return *this;
+	if ( deb >= fin || fin >= laCible.end()) Lecture<Log, KeyLog>::ErreurLecture();
 	cible = string ( deb, fin );
 
 

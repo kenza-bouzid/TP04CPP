@@ -30,7 +30,7 @@ ne tiennent plus compte des fichiers de type image, javascript ou css.
 \fB-t heure\fR
 : le programme ne conserve que les Logs qui ont été réalisés dans la plage
 horaire spécifiée par le paramètre "heure". Le format d'entrée a respecter est le suivant :
-\fBHH:MM\fR.
+\fBHH:MM\fR ou \fBHH\fR.
 La sélection sur l'horaire suit la règle suivante : seuls les Logs ayant été réalisés dans la tranche [ heure ; heure + 1 [ sont conservés.
 Cette option impacte les résultats obtenus sur le top 10 ou le graphe.
 
