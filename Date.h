@@ -1,5 +1,5 @@
 /******************************************************************************
-		Date -
+		Date - Conteneur pour une date (ici HH:MM)
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST

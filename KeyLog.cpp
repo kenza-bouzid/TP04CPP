@@ -1,10 +1,11 @@
 
 /*************************************************************************
-                           KeyLog  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    KeyLog : cle sous forme de string, string
+
+debut		: 2019-01-17
+copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
+e-mail		: kenza.bouzid@insa-lyon.fr
+      pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <KeyLog> (fichier KeyLog.cpp) ------------

@@ -1,6 +1,6 @@
 
 /*************************************************************************
-                           GestionLog  -  description
+                           GestionLog  -  Gestion generale des Logs
                              -------------------
     début                : 2019-01-16
     copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -25,7 +25,7 @@
 
 //------------------------------------------------------------------------
 
-// Rôle de la classe <GestionLog>
+// Role de la classe <GestionLog>
 //  Implémente un gestionnaire de log exploitant les données extraites d'un
 //  fichier de log à travers l'outil d'analyse des fichiers de log Apache
 //   en utilisant une structure de données la plus optimale possible.
@@ -129,7 +129,7 @@ protected:
     // la clé de la map est de type string correspondant aux cibles
     // la valeur est de type Arc
 
-    
+
 };
 //-------------------------------- Autres définitions dépendantes de <GestionLog>
 

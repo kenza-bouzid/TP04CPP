@@ -1,5 +1,5 @@
 /******************************************************************************
-		Log -
+		Log - Conteneur d'un Log avec des informations
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -260,7 +260,7 @@ static string extensions[] = { "js", "css", "jpg", "jpeg", "png", "ico", "bmp",
 				"svg", "gif", "ics"};
 const int TAILLE_EXTENSIONS = 10;
 
-bool Log::estContenuIndispensable ( string & extension )
+bool Log::estContenuIndispensable ( const string & extension )
 {
 	for ( int i = 0; i < TAILLE_EXTENSIONS; i++ )
 	{

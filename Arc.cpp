@@ -1,10 +1,11 @@
 
 /*************************************************************************
-                           Arc  -  description
+                           Arc
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+     debut		: 2019-01-16
+ 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
+ 	e-mail		: kenza.bouzid@insa-lyon.fr
+ 			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <Arc> (fichier Arc.cpp) ------------
@@ -96,7 +97,7 @@ bool Arc::compare_nocase (const string & first, const string & second)
     else if ( tolower(first[i]) > tolower(second[i] )) return false;
     ++i;
   }
-  
+
   if (first.length()<second.length()) return true;
   else return false;
 }

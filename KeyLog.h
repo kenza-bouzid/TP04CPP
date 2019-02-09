@@ -1,6 +1,6 @@
 
 /******************************************************************************
-		Lecture - Lecture d'un fichier de Log
+		KeyLog : cle sous forme de string, string
 
 	debut		: 2019-01-17
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -19,8 +19,8 @@
 using namespace std ;
 
 //------------------------------------------------------------------------
-// Rôle de la classe <KeyLog>
-// Cette classe a deux rôles :
+// Role de la classe <KeyLog>
+// Cette classe a deux roles :
 // 1- Elle implémente la clé de la table de hachage temporaire utilisée pour
 //  stocker les infos qui sont utiles aux fonctionnalités de notre application.
 //  Elle sert également de structure de transport de ces infos à partir de

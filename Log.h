@@ -1,5 +1,5 @@
 /******************************************************************************
-		Log -
+		Log - Conteneur d'un Log avec des informations
 
 	debut		: 2019-01-16
 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -147,7 +147,7 @@ public :
 ///////////////////////////////////////////////////////////////////////// PRIVE
 protected :
 	//----------------------------------------------- Methodes protegees --
-	static bool estContenuIndispensable ( string & extension );
+	static bool estContenuIndispensable ( const string & extension );
 	// Mode d'emploi :
 	//	Determine si l'extension est reliee a des contenus CSS, Image, JS...
 	//	type1 : l'extension de fichier

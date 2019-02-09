@@ -1,10 +1,11 @@
 
 /*************************************************************************
-                           Arc  -  description
+                           Arc
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+     debut		: 2019-01-16
+ 	copyright	: (C) 2018 par K. BOUZID et P-Y. GENEST
+ 	e-mail		: kenza.bouzid@insa-lyon.fr
+ 			  pierre-yves.genest@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <Arc> (fichier Arc.h) ----------------
@@ -13,7 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <cstring>
 //------------------------------------------------------------------------
-// Rôle de la classe <Arc>
+// Role de la classe <Arc>
 // Implémente le bout de l'arc refer et cardinalité
 // Cette classe peut être utilisée pour représenter un bout d'arc (referer-card)
 // ainsi qu'un bout (cible-referer)

@@ -1,6 +1,6 @@
 
 /*************************************************************************
-                           GestionLog  -  description
+                           GestionLog  -  Gestion generale des Logs
                              -------------------
     début                : 2019-01-16
     copyright            : (C) 2018 par K. BOUZID et P-Y. GENEST
@@ -188,7 +188,7 @@ vector<Arc> GestionLog::dixPopulaire ()
       mapTemp[it->first]=calculPopularite(it->first);
     }
   }
-  
+
   vector <Arc> listeArc;
   for (auto it = mapTemp.begin(); it != mapTemp.end(); ++it)
   {
