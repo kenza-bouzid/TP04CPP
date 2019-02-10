@@ -5,12 +5,12 @@
 
 #--- VARIABLES ---
 #Fichiers
-FICHIER_SORTIE := analog
+DIR = bin
+FICHIER_SORTIE := $(DIR)/analog
 CPP := $(wildcard *.cpp)
 LIBRAIRIES :=
 CMD =
 
-DIR = obj
 O := $(patsubst %,$(DIR)/%,$(CPP:.cpp=.o))
 DEP :=$(O:.o=.d)
 
@@ -40,6 +40,8 @@ GDB := gdb
 #--- COMMANDES ---
 compil : $(FICHIER_SORTIE)
 
+test :
+	cd Tests; ./mktest.sh; cd ..
 
 #Edition de Lien
 $(FICHIER_SORTIE) : $(O)

@@ -1,1 +1,1 @@
-../../analog -g dot.dot ../Logs/mauvaisFormat.log
+../../bin/analog -g dot.dot ../Logs/mauvaisFormat.log

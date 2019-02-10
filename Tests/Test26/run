@@ -1,1 +1,1 @@
-../../analog -e -t 0:16 -g dot.dot ../Logs/log4.log
+../../bin/analog -e -t 0:16 -g dot.dot ../Logs/log4.log
