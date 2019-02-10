@@ -201,11 +201,13 @@ static void analyseArguments ( int argc, char * argv [])
 	}
 	nomFichierLog = argv[argc - 1];
 
+#ifdef MAP
 	cout << "Description des entrees du main" << endl;
 	cout << "fichier : " << nomFichierLog << endl;
 	cout << "graphe : " << optionCreationGraphe << " : " << nomFichierGraphe << endl;
-	cout << "extension : " << optionGarderIndispensable << endl;
+	cout << "extension" << optionGarderIndispensable << endl;
 	cout << "heure : " << optionHeure << " : " << heure << endl;
+#endif
 
 	if ( nomFichierLog == "" )
 	{
