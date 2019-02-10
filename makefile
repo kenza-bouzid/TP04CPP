@@ -1,6 +1,7 @@
 .SILENT:
 .PHONY : compil run clean suppr valgrind gdb
 # Fichier Makefile generique
+SHELL := /bin/bash
 
 
 #--- VARIABLES ---
@@ -40,7 +41,7 @@ GDB := gdb
 #--- COMMANDES ---
 compil : $(FICHIER_SORTIE)
 
-test :
+test : $(FICHIER_SORTIE)
 	cd Tests; ./mktest.sh; cd ..
 
 #Edition de Lien
